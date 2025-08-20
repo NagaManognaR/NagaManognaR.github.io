@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manogna Rayasam Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0b0b;           /* deeper than Netflix */
+      --panel:#141414;        /* Netflix base */
+      --ink:#e5e5e5;          /* light text */
+      --muted:#9ca3af;        /* gray */
+      --accent:#e50914;       /* Netflix red */
+      --accent-2:#b20710;     /* deeper red */
+      --card:#1c1c1c;         /* card */
+      --glass: rgba(255,255,255,.07);
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+    a{color:inherit;text-decoration:none}
+    img{display:block;width:100%;height:100%;object-fit:cover;border-radius:14px}
+    .container{padding-inline:clamp(16px,5vw,48px)}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg, rgba(11,11,11,0.92), rgba(11,11,11,0.65) 60%, rgba(11,11,11,0));backdrop-filter:saturate(140%) blur(8px)}
+    .nav{display:flex;align-items:center;gap:20px;padding:16px 0}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.5px}
+    .logo{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#ff4242);display:grid;place-items:center;box-shadow:0 6px 20px rgba(229,9,20,.35)}
+    .logo span{font-family:"Space Grotesk",sans-serif;font-weight:800}
+    .nav a.link{opacity:.9}
+    .nav a.link:hover{opacity:1}
+    .spacer{flex:1}
+    .cta{display:flex;gap:10px}
+    .btn{border:none;cursor:pointer;padding:10px 14px;border-radius:999px;background:var(--glass);color:var(--ink);backdrop-filter: blur(6px);transition:transform .2s ease, background .2s ease}
+    .btn:hover{transform:translateY(-1px);background:rgba(255,255,255,.12)}
+    .btn.primary{background:linear-gradient(180deg,var(--accent),var(--accent-2));box-shadow:0 10px 24px rgba(229,9,20,.36)}
+
+    /* Hero */
+    .hero{position:relative;min-height:72vh;border-radius:0 0 28px 28px;overflow:hidden}
+    .hero::before{content:"";position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1551281044-8b89a1a5c5d5?q=80&w=1800&auto=format&fit=crop') center/cover no-repeat;filter:brightness(.6)}
+    .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(1200px 500px at 20% 20%, rgba(229,9,20,.18), transparent), linear-gradient(180deg, rgba(11,11,11,.3), rgba(11,11,11,.85) 65%)}
+    .hero-inner{position:relative;z-index:1;display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:end;min-height:72vh}
+    @media (max-width: 960px){.hero-inner{grid-template-columns:1fr;align-items:end;gap:20px}}
+    .hero-copy{padding-bottom:48px}
+    .eyebrow{display:inline-block;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.08);backdrop-filter:blur(6px);font-size:12px;color:#eee;text-transform:uppercase;letter-spacing:.12em}
+    h1{font-family:"Space Grotesk",sans-serif;font-size:clamp(32px,6vw,62px);line-height:1.05;margin:14px 0 10px}
+    .sub{color:var(--muted);font-size:clamp(14px,2.2vw,18px);max-width:68ch}
+    .hero-actions{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+
+    .profile-card{justify-self:end;align-self:center;width:min(420px,90%);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.08);border-radius:24px;box-shadow:var(--shadow);overflow:hidden}
+    .profile-top{position:relative;height:200px}
+    .profile-top img{border-radius:0}
+    .avatar{position:absolute;bottom:-36px;left:20px;width:86px;height:86px;border-radius:20px;border:3px solid #0b0b0b;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.45)}
+    .profile-body{padding:56px 20px 20px}
+    .name{font-weight:800;font-size:20px}
+    .loc{color:var(--muted);font-size:14px}
+    .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .chip{font-size:12px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)}
+
+    /* Row (Netflix-style carousel) */
+    section{padding:28px 0}
+    .row-title{font-size:22px;font-weight:800;margin:0 0 12px}
+    .row{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px, 1fr);gap:14px;overflow:auto;padding:8px 2px 10px;scroll-snap-type:x mandatory}
+    .row::-webkit-scrollbar{height:8px}
+    .row::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:999px}
+    .card{position:relative;border-radius:16px;background:var(--card);padding:10px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px;scroll-snap-align:start;transition:transform .2s ease}
+    .card:hover{transform:translateY(-4px)}
+    .thumb{aspect-ratio:16/9;border-radius:12px;overflow:hidden}
+    .meta{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .tags{display:flex;gap:6px;flex-wrap:wrap}
+    .tag{font-size:11px;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)}
+    .card h3{font-size:16px;margin:0}
+    .links{display:flex;gap:8px;flex-wrap:wrap}
+    .pill{font-size:12px;border:1px solid rgba(255,255,255,.1);padding:6px 10px;border-radius:12px;background:rgba(255,255,255,.06)}
+    .pill:hover{border-color:rgba(255,255,255,.2)}
+
+    /* Two-column splits */
+    .split{display:grid;grid-template-columns:1.2fr .8fr;gap:24px}
+    @media (max-width: 900px){.split{grid-template-columns:1fr}}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.08);border-radius:24px;box-shadow:var(--shadow);padding:18px}
+
+    /* Experience timeline as cards */
+    .xp{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+    .xp .item{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:14px}
+    .xp .role{font-weight:700}
+    .xp .org{color:var(--muted);font-size:14px}
+    .xp .time{font-size:12px;color:var(--muted)}
+
+    /* Skills as dense pills */
+    .skills{display:flex;flex-wrap:wrap;gap:8px}
+    .skills .s{padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);font-size:12px;transition:background .2s, box-shadow .2s;cursor:pointer;position:relative}
+    .skills .s:hover{background:var(--accent);color:#fff;box-shadow:0 2px 12px rgba(229,9,20,.18)}
+    .skills .s[data-desc]:hover::after{
+      content:attr(data-desc);
+      position:absolute;
+      left:50%;
+      top:110%;
+      transform:translateX(-50%);
+      background:var(--panel);
+      color:var(--ink);
+      padding:6px 12px;
+      border-radius:8px;
+      font-size:13px;
+      white-space:nowrap;
+      box-shadow:0 2px 12px rgba(0,0,0,.18);
+      z-index:10;
+    }
+    .skills .s[data-emoji]:hover::before{
+      content:attr(data-emoji);
+      margin-right:6px;
+    }
+    .project-hover{transition:transform .2s, box-shadow .2s;cursor:pointer;position:relative}
+    .project-hover:hover{transform:scale(1.04) translateY(-2px);box-shadow:0 4px 18px rgba(229,9,20,.18)}
+    .project-hover[data-desc]:hover::after{
+      content:attr(data-desc);
+      position:absolute;
+      left:50%;
+      top:100%;
+      transform:translateX(-50%);
+      background:var(--panel);
+      color:var(--ink);
+      padding:6px 12px;
+      border-radius:8px;
+      font-size:13px;
+      white-space:nowrap;
+      box-shadow:0 2px 12px rgba(0,0,0,.18);
+      z-index:10;
+    }
+
+    /* Footer */
+    footer{margin-top:30px;padding:40px 0;background:linear-gradient(180deg, transparent, #000)}
+    .foot{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between}
+    .social{display:flex;gap:12px;flex-wrap:wrap}
+    .social a{padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)}
+
+    /* Small helpers */
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size:12px;color:var(--muted)}
+    .notice{font-size:12px;color:var(--muted)}
+    .hero-top-img {
+      width: 320px;
+      height: 440px;
+      object-fit: cover;
+      /* border-radius: 24px; */
+      border: none;
+      box-shadow: none;
+      background: transparent;
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo"><span>MR</span></div>
+        <div>
+          <div style="font-weight:800;line-height:1">Manogna Rayasam</div>
+          <div class="mono">Data Scientist Maryland, USA</div>
+        </div>
+      </div>
+      <a class="link" href="#projects">Projects</a>
+      <a class="link" href="#experience">Experience</a>
+      <a class="link" href="#skills">Skills</a>
+      <a class="link" href="#awards">Awards</a>
+      <a class="link" href="#deployments">aboutme</a>
+      <a class="link" href="#contact">Contact</a>
+      <a class="link" href="D:/portfolio_project/data_storytelling.html" id="data-storytelling">About Me</a>
+      <div class="spacer"></div>
+      <div class="cta">
+  <!-- TODO: replace # with actual links -->
+  <a class="btn" href="https://www.linkedin.com/in/rn-manogna/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="btn" href="https://github.com/Manognarayasam" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn primary" href="mailto:rnagamanogna@gmail.com">Email Me</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-inner container">
+        <div class="hero-copy">
+          <span class="eyebrow">Welcome!</span>
+          <h1>Manogna Rayasam</h1>
+          <div class="sub">Data Scientist | Storyteller | Analytics Enthusiast</div>
+          <div class="hero-actions">
+            <a class="btn primary" href="#projects">View Projects</a>
+            <a class="btn" href="#contact">Contact Me</a>
+          </div>
+        </div>
+        <div>
+          <img src="Manogna_bgless.png" alt="Manogna Rayasam" class="hero-top-img" />
+        </div>
+      </div>
+    </section>
+    <section class="container" id="story">
+      <h2 class="row-title" style="font-size:2.2rem;margin-bottom:18px">My Journey</h2>
+      <p class="notice" style="font-size:18px;font-weight:600;color:var(--accent);margin:10px 0 18px">Every data has a story. I am here to uncover it.</p>
+      <section id="training-data" style="margin-bottom:36px">
+        <h3 style="color:var(--accent);font-size:1.5rem;margin-bottom:8px">My Training Data</h3>
+        <div class="panel">
+          <div class="profile-card">
+            <div class="profile-top">
+              <img alt="Interface/analytics background" src="https://images.unsplash.com/photo-1557264337-e8a93017fe92?q=80&w=1600&auto=format&fit=crop"/>
+              <div class="avatar">
+                <img alt="Avatar" src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&w=400&auto=format&fit=crop"/>
+              </div>
+            </div>
+            <div class="profile-body">
+              <div class="name">Manogna Rayasam</div>
+              <div class="loc">Maryland, United States</div>
+              <div class="chips">
+                <span class="chip">Python</span>
+                <span class="chip">RAG</span>
+                <span class="chip">Azure & AWS</span>
+                <span class="chip">Tableau</span>
+                <span class="chip">LLMs</span>
+                <span class="chip">MLOps</span>
+              </div>
+              <div style="margin-top:14px">
+                <a href="data_storytelling.html" style="color:#e50914;font-weight:600">Explore Data Storytelling with My Own Data</a>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:18px">
+            <div class="item" style="background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px">
+              <div class="role">M.S. in Data Science</div>
+              <div class="org">University of Maryland, Baltimore County</div>
+              <div class="time">Jan 2024 – Dec 2025 • Baltimore, MD</div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="fine-tuning" style="margin-bottom:36px">
+        <h3 style="color:var(--accent);font-size:1.5rem;margin-bottom:8px">Fine-Tuning</h3>
+        <div class="panel">
+          <div class="xp">
+            <div class="item">
+              <div class="role">Data Science Intern</div>
+              <div class="org">UMBC, USA</div>
+              <div class="time">Jun 2025 – Present</div>
+              <p class="notice">Cleaned & analyzed 5 yrs of career outcome data; built Tableau dashboards and student‑facing insights.</p>
+            </div>
+            <div class="item">
+              <div class="role">Data Scientist</div>
+              <div class="org">Kanhel Consulting LLC, USA</div>
+              <div class="time">Dec 2024 – May 2025</div>
+              <p class="notice">RAG assistant on Azure OpenAI + Pinecone; XGBoost forecasting; Azure SQL pipelines; analytics dashboards.</p>
+            </div>
+            <div class="item">
+              <div class="role">Data Scientist</div>
+              <div class="org">Cognizant, India</div>
+              <div class="time">Dec 2020 – Dec 2023</div>
+              <p class="notice">NLP for support tickets (−15% churn); Tableau for execs (+30% data‑driven decisions); automated ETL (−40% TAT).</p>
+            </div>
+            <div class="item">
+              <div class="role">Data Analyst</div>
+              <div class="org">Ezerka Technology Solutions, India</div>
+              <div class="time">Jun 2020 – Dec 2020</div>
+              <p class="notice">Data processing & dashboards for stakeholder insights.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="inference-mode" style="margin-bottom:36px">
+        <h3 style="color:var(--accent);font-size:1.5rem;margin-bottom:8px">Inference Mode</h3>
+        <div class="panel">
+          <div class="skills">
+            <!-- Languages -->
+            <span class="s" data-desc="My primary language for ML, analytics, and automation." data-emoji="🐍">Python</span><span class="s" data-desc="Web apps, dashboards, and interactivity." data-emoji="🖥️">JavaScript</span><span class="s" data-desc="Querying, wrangling, and transforming data." data-emoji="🗄️">SQL</span><span class="s" data-desc="Scalable apps and enterprise solutions." data-emoji="☕">Java</span>
+            <!-- Databases -->
+            <span class="s" data-desc="NoSQL for flexible data." data-emoji="🍃">MongoDB</span><span class="s" data-desc="Classic relational database." data-emoji="🗃️">MySQL</span><span class="s" data-desc="Cloud SQL for scalable storage." data-emoji="☁️">Azure SQL</span><span class="s" data-desc="Vector DB for AI search." data-emoji="🔍">Pinecone</span>
+            <!-- NLP & AI -->
+            <span class="s" data-desc="Retrieval Augmented Generation for smarter LLMs." data-emoji="🔗">RAG</span><span class="s" data-desc="Crafting effective prompts for LLMs." data-emoji="📝">Prompt Engineering</span><span class="s" data-desc="Optimizing context for AI." data-emoji="🧠">Context Engineering</span><span class="s" data-desc="Customizing LLMs for tasks." data-emoji="🛠️">LLM Fine‑tuning</span><span class="s" data-desc="State-of-the-art deep learning models." data-emoji="🤖">Transformers</span><span class="s" data-desc="NLP toolkit for fast pipelines." data-emoji="💬">spaCy</span><span class="s" data-desc="NLP toolkit for research." data-emoji="📚">NLTK</span><span class="s" data-desc="Model hub for AI." data-emoji="🤗">HuggingFace</span>
+            <!-- Frameworks -->
+            <span class="s" data-desc="Rapid data apps." data-emoji="⚡">Streamlit</span><span class="s" data-desc="LLM-powered chat apps." data-emoji="💬">Chainlit</span><span class="s" data-desc="LLM pipelines and orchestration." data-emoji="🔗">LangChain</span><span class="s" data-desc="Agentic RAG for advanced AI." data-emoji="🕵️">Agno</span><span class="s" data-desc="Orchestrating AI workflows." data-emoji="🧩">Semantic Kernel</span><span class="s" data-desc="Fast APIs for ML." data-emoji="🚀">FastAPI</span><span class="s" data-desc="Modern UI for web apps." data-emoji="⚛️">React</span><span class="s" data-desc="Backend for scalable apps." data-emoji="🟩">Node.js</span><span class="s" data-desc="ML toolkit for Python." data-emoji="📊">scikit‑learn</span><span class="s" data-desc="Gradient boosting for ML." data-emoji="🌲">XGBoost</span><span class="s" data-desc="Lightweight boosting for ML." data-emoji="💡">LightGBM</span><span class="s" data-desc="Deep learning framework." data-emoji="🔬">TensorFlow</span><span class="s" data-desc="High-level DL API." data-emoji="🧬">Keras</span><span class="s" data-desc="Flexible deep learning." data-emoji="🔥">PyTorch</span><span class="s" data-desc="Utility-first CSS framework." data-emoji="🎨">Tailwind</span>
+            <!-- Cloud -->
+            <span class="s" data-desc="Microsoft's cloud platform." data-emoji="☁️">Azure (OpenAI, Blob, SQL, AI Search, Azure ML)</span>
+            <span class="s" data-desc="Amazon's cloud platform." data-emoji="☁️">AWS (EC2, S3, RDS, SQS, SageMaker, Bedrock, CloudWatch, IAM, ELB, Aurora)</span>
+            <span class="s" data-desc="VPS hosting for apps." data-emoji="🖥️">Hostinger VPS</span><span class="s" data-desc="Google's cloud platform." data-emoji="☁️">GCP</span>
+            <!-- BI -->
+            <span class="s" data-desc="BI dashboards for insights." data-emoji="📈">Tableau</span><span class="s" data-desc="Business analytics dashboards." data-emoji="📊">Power BI</span><span class="s" data-desc="Python plotting library." data-emoji="📉">Matplotlib</span><span class="s" data-desc="Statistical data visualization." data-emoji="📊">Seaborn</span><span class="s" data-desc="Interactive charts for web." data-emoji="📊">Plotly</span>
+            <!-- Big Data & ETL -->
+            <span class="s" data-desc="Big data processing." data-emoji="⚡">Apache Spark</span><span class="s" data-desc="Distributed storage & compute." data-emoji="🐘">Hadoop</span><span class="s" data-desc="Streaming data platform." data-emoji="💬">Kafka</span>
+            <!-- Tools -->
+            <span class="s" data-desc="Project management tool." data-emoji="📋">Jira</span><span class="s" data-desc="Version control for code." data-emoji="🔗">Git/GitHub</span><span class="s" data-desc="Version control for teams." data-emoji="🔗">Bitbucket</span><span class="s" data-desc="Containerization for apps." data-emoji="🐳">Docker</span><span class="s" data-desc="API testing tool." data-emoji="🔬">Postman</span><span class="s" data-desc="Open-source OS." data-emoji="🐧">Linux</span><span class="s" data-desc="CI/CD automation." data-emoji="🔄">Jenkins</span><span class="s" data-desc="UI/UX design tool." data-emoji="🎨">Figma</span><span class="s" data-desc="Graphic design tool." data-emoji="🖌️">Canva</span>
+          </div>
+        </div>
+      </section>
+      <section id="deployments" style="margin-bottom:36px">
+        <h3 style="color:var(--accent);font-size:1.5rem;margin-bottom:8px">Deployments</h3>
+        <div class="panel">
+          <div class="row">
+            <article class="card">
+              <div class="thumb"><img alt="Hackathon" src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1600&auto=format&fit=crop"/></div>
+              <h3>Smart India Hackathon — Winner</h3>
+              <p class="notice">Invoice reconciliation system; 20,000+ contestants.</p>
+            </article>
+            <article class="card">
+              <div class="thumb"><img alt="Mars visualization" src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1600&auto=format&fit=crop"/></div>
+              <h3>NASA Space Apps — Top Honor</h3>
+              <p class="notice">Unreal Engine game for Mars colonization.</p>
+            </article>
+            <article class="card">
+              <div class="thumb"><img alt="Social media award" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop"/></div>
+              <h3>Social Media Champ</h3>
+              <p class="notice">Smart City Hackathon; awarded by IAS Jayesh Ranjan.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section id="projects" class="container">
+      <h2 class="row-title">Featured Projects</h2>
+      <div class="row">
+        <!-- InsightAI -->
+        <article class="card">
+          <div class="thumb project-hover" data-desc="Multimodal recording, Whisper transcription, feedback reports. Deployed on VPS." title="Interview analysis app">
+            <img alt="Interview analysis app" src="https://images.unsplash.com/photo-1523289333742-be1143f6b766?q=80&w=1600&auto=format&fit=crop"/>
+          </div>
+          <h3>InsightAI — Interview Analysis Platform</h3>
+          <div class="meta">
+            <div class="tags">
+              <span class="tag">Streamlit</span>
+              <span class="tag">GPT‑4o</span>
+              <span class="tag">RAG</span>
+              <span class="tag">MongoDB</span>
+            </div>
+          </div>
+          <p class="notice">Multimodal recording, Whisper transcription, feedback reports. Deployed on VPS.</p>
+          <div class="links">
+            <a class="pill" href="#" target="_blank">LLMs</a>
+            <a class="pill" href="https://github.com/Manognarayasam/AI-interviewer" target="_blank">Code</a>
+          </div>
+        </article>
+        <!-- Support Genie AI -->
+        <article class="card">
+          <div class="thumb project-hover" data-desc="Cited responses, scraping pipeline, policy‑aware QA for international students." title="Chatbot assistant">
+            <img alt="Chatbot assistant" src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1600&auto=format&fit=crop"/>
+          </div>
+          <h3>Support Genie AI — ISSS Assistant</h3>
+          <div class="meta">
+            <div class="tags">
+              <span class="tag">Agentic RAG</span>
+              <span class="tag">Agno</span>
+              <span class="tag">FAISS</span>
+              <span class="tag">Chainlit</span>
+            </div>
+          </div>
+          <p class="notice">Cited responses, scraping pipeline, policy‑aware QA for international students.</p>
+          <div class="links">
+            <a class="pill" href="#" target="_blank">LLMs</a>
+            <a class="pill" href="https://github.com/Manognarayasam/SupportGenie-AI-Agent" target="_blank">Code</a>
+          </div>
+        </article>
+        <!-- Uber FHV -->
+        <article class="card">
+          <div class="thumb project-hover" data-desc="5M+ trips, peak‑hour demand, zone hotspots; allocation & surge insights." title="NYC mobility analytics">
+            <img alt="NYC mobility analytics" src="https://images.unsplash.com/photo-1518306727298-4c17e1bf6942?q=80&w=1600&auto=format&fit=crop"/>
+          </div>
+          <h3>NYC For‑Hire Vehicles Analysis</h3>
+          <div class="meta">
+            <div class="tags">
+              <span class="tag">PySpark</span>
+              <span class="tag">Hadoop</span>
+              <span class="tag">Dashboards</span>
+            </div>
+          </div>
+          <p class="notice">5M+ trips, peak‑hour demand, zone hotspots; allocation & surge insights.</p>
+          <div class="links">
+            <a class="pill" href="#" target="_blank">Bigdata</a>
+            <a class="pill" href="https://github.com/Manognarayasam/nyc-for-hire-vehicles-analysis" target="_blank">code</a>
+          </div>
+        </article>
+        <!-- Alzheimer CNN -->
+        <article class="card">
+          <div class="thumb project-hover" data-desc="Preprocessing, augmentation, stratified CV; clinician‑friendly heatmaps." title="MRI classification">
+            <img alt="MRI classification" src="https://images.unsplash.com/photo-1584985573335-3f98e6159151?q=80&w=1600&auto=format&fit=crop"/>
+          </div>
+          <h3>Alzheimer’s Diagnosis w/ CNNs</h3>
+          <div class="meta">
+            <div class="tags">
+              <span class="tag">TensorFlow</span>
+              <span class="tag">Grad‑CAM</span>
+              <span class="tag">AUC 0.92</span>
+            </div>
+          </div>
+          <p class="notice">Preprocessing, augmentation, stratified CV; clinician‑friendly heatmaps.</p>
+          <div class="links">
+            <a class="pill" href="#" target="_blank">ML</a>
+            <a class="pill" href="https://github.com/Manognarayasam/Early-Detection_Alzheimer-s_Disease" target="_blank">Code</a>
+          </div>
+        </article>
+        <!-- Churn -->
+        <article class="card">
+          <div class="thumb project-hover" data-desc="API GW + Lambda; alerts to CS playbooks; −20% cancellations, +30% retained." title="Churn risk scoring">
+            <img alt="Churn risk scoring" src="https://images.unsplash.com/photo-1543286386-713bdd548da4?q=80&w=1600&auto=format&fit=crop"/>
+          </div>
+          <h3>Real‑Time Churn Risk Scoring</h3>
+          <div class="meta">
+            <div class="tags">
+              <span class="tag">SageMaker</span>
+              <span class="tag">XGBoost</span>
+              <span class="tag">SHAP</span>
+            </div>
+          </div>
+          <p class="notice">API GW + Lambda; alerts to CS playbooks; −20% cancellations, +30% retained.</p>
+          <div class="links">
+            <a class="pill" href="#" target="_blank">AWS</a>
+            <a class="pill" href="https://github.com/Manognarayasam/aws-sagemaker-churn-pipeline" target="_blank">Code</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="container split" id="experience">
+      <div class="panel">
+        <h2 class="row-title">Experience</h2>
+        <div class="xp">
+          <div class="item">
+            <div class="role">Data Science Intern</div>
+            <div class="org">UMBC, USA</div>
+            <div class="time">Jun 2025 – Present</div>
+            <p class="notice">Cleaned & analyzed 5 yrs of career outcome data; built Tableau dashboards and student‑facing insights.</p>
+          </div>
+          <div class="item">
+            <div class="role">Data Scientist</div>
+            <div class="org">Kanhel Consulting LLC, USA</div>
+            <div class="time">Dec 2024 – May 2025</div>
+            <p class="notice">RAG assistant on Azure OpenAI + Pinecone; XGBoost forecasting; Azure SQL pipelines; analytics dashboards.</p>
+          </div>
+          <div class="item">
+            <div class="role">Data Scientist</div>
+            <div class="org">Cognizant, India</div>
+            <div class="time">Dec 2020 – Dec 2023</div>
+            <p class="notice">NLP for support tickets (−15% churn); Tableau for execs (+30% data‑driven decisions); automated ETL (−40% TAT).</p>
+          </div>
+          <div class="item">
+            <div class="role">Data Analyst</div>
+            <div class="org">Ezerka Technology Solutions, India</div>
+            <div class="time">Jun 2020 – Dec 2020</div>
+            <p class="notice">Data processing & dashboards for stakeholder insights.</p>
+          </div>
+        </div>
+      </div>
+      <div class="panel" id="education">
+        <h2 class="row-title">Education</h2>
+        <div class="item" style="background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px">
+          <div class="role">M.S. in Data Science</div>
+          <div class="org">University of Maryland, Baltimore County</div>
+          <div class="time">Jan 2024 – Dec 2025 • Baltimore, MD</div>
+        </div>
+        <h2 class="row-title" style="margin-top:22px">Research</h2>
+        <div id="research" class="item" style="background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:16px">
+          <div class="role">Designing Nudges for LLMs (Co‑author)</div>
+          <p class="notice">Prompt‑nudge evaluation pipeline measuring accuracy/completeness/safety; Python, OpenAI/HF, W&B.</p>
+          <div class="links">
+            <!-- <a class="pill" href="#" target="_blank">Read</a> -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="container">
+      <h2 class="row-title">Skills</h2>
+      <div class="panel">
+        <div class="skills">
+          <!-- Languages -->
+          <span class="s" data-desc="My primary language for ML, analytics, and automation." data-emoji="🐍">Python</span><span class="s" data-desc="Web apps, dashboards, and interactivity." data-emoji="🖥️">JavaScript</span><span class="s" data-desc="Querying, wrangling, and transforming data." data-emoji="🗄️">SQL</span><span class="s" data-desc="Scalable apps and enterprise solutions." data-emoji="☕">Java</span>
+          <!-- Databases -->
+          <span class="s" data-desc="NoSQL for flexible data." data-emoji="🍃">MongoDB</span><span class="s" data-desc="Classic relational database." data-emoji="🗃️">MySQL</span><span class="s" data-desc="Cloud SQL for scalable storage." data-emoji="☁️">Azure SQL</span><span class="s" data-desc="Vector DB for AI search." data-emoji="🔍">Pinecone</span>
+          <!-- NLP & AI -->
+          <span class="s" data-desc="Retrieval Augmented Generation for smarter LLMs." data-emoji="🔗">RAG</span><span class="s" data-desc="Crafting effective prompts for LLMs." data-emoji="📝">Prompt Engineering</span><span class="s" data-desc="Optimizing context for AI." data-emoji="🧠">Context Engineering</span><span class="s" data-desc="Customizing LLMs for tasks." data-emoji="🛠️">LLM Fine‑tuning</span><span class="s" data-desc="State-of-the-art deep learning models." data-emoji="🤖">Transformers</span><span class="s" data-desc="NLP toolkit for fast pipelines." data-emoji="💬">spaCy</span><span class="s" data-desc="NLP toolkit for research." data-emoji="📚">NLTK</span><span class="s" data-desc="Model hub for AI." data-emoji="🤗">HuggingFace</span>
+          <!-- Frameworks -->
+          <span class="s" data-desc="Rapid data apps." data-emoji="⚡">Streamlit</span><span class="s" data-desc="LLM-powered chat apps." data-emoji="💬">Chainlit</span><span class="s" data-desc="LLM pipelines and orchestration." data-emoji="🔗">LangChain</span><span class="s" data-desc="Agentic RAG for advanced AI." data-emoji="🕵️">Agno</span><span class="s" data-desc="Orchestrating AI workflows." data-emoji="🧩">Semantic Kernel</span><span class="s" data-desc="Fast APIs for ML." data-emoji="🚀">FastAPI</span><span class="s" data-desc="Modern UI for web apps." data-emoji="⚛️">React</span><span class="s" data-desc="Backend for scalable apps." data-emoji="🟩">Node.js</span><span class="s" data-desc="ML toolkit for Python." data-emoji="📊">scikit‑learn</span><span class="s" data-desc="Gradient boosting for ML." data-emoji="🌲">XGBoost</span><span class="s" data-desc="Lightweight boosting for ML." data-emoji="💡">LightGBM</span><span class="s" data-desc="Deep learning framework." data-emoji="🔬">TensorFlow</span><span class="s" data-desc="High-level DL API." data-emoji="🧬">Keras</span><span class="s" data-desc="Flexible deep learning." data-emoji="🔥">PyTorch</span><span class="s" data-desc="Utility-first CSS framework." data-emoji="🎨">Tailwind</span>
+          <!-- Cloud -->
+          <span class="s" data-desc="Microsoft's cloud platform." data-emoji="☁️">Azure (OpenAI, Blob, SQL, AI Search, Azure ML)</span>
+          <span class="s" data-desc="Amazon's cloud platform." data-emoji="☁️">AWS (EC2, S3, RDS, SQS, SageMaker, Bedrock, CloudWatch, IAM, ELB, Aurora)</span>
+          <span class="s" data-desc="VPS hosting for apps." data-emoji="🖥️">Hostinger VPS</span><span class="s" data-desc="Google's cloud platform." data-emoji="☁️">GCP</span>
+          <!-- BI -->
+          <span class="s" data-desc="BI dashboards for insights." data-emoji="📈">Tableau</span><span class="s" data-desc="Business analytics dashboards." data-emoji="📊">Power BI</span><span class="s" data-desc="Python plotting library." data-emoji="📉">Matplotlib</span><span class="s" data-desc="Statistical data visualization." data-emoji="📊">Seaborn</span><span class="s" data-desc="Interactive charts for web." data-emoji="📊">Plotly</span>
+          <!-- Big Data & ETL -->
+          <span class="s" data-desc="Big data processing." data-emoji="⚡">Apache Spark</span><span class="s" data-desc="Distributed storage & compute." data-emoji="🐘">Hadoop</span><span class="s" data-desc="Streaming data platform." data-emoji="💬">Kafka</span>
+          <!-- Tools -->
+          <span class="s" data-desc="Project management tool." data-emoji="📋">Jira</span><span class="s" data-desc="Version control for code." data-emoji="🔗">Git/GitHub</span><span class="s" data-desc="Version control for teams." data-emoji="🔗">Bitbucket</span><span class="s" data-desc="Containerization for apps." data-emoji="🐳">Docker</span><span class="s" data-desc="API testing tool." data-emoji="🔬">Postman</span><span class="s" data-desc="Open-source OS." data-emoji="🐧">Linux</span><span class="s" data-desc="CI/CD automation." data-emoji="🔄">Jenkins</span><span class="s" data-desc="UI/UX design tool." data-emoji="🎨">Figma</span><span class="s" data-desc="Graphic design tool." data-emoji="🖌️">Canva</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="awards" class="container">
+      <h2 class="row-title">Awards & Leadership</h2>
+      <div class="row">
+        <article class="card">
+          <div class="thumb"><img alt="Hackathon" src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=1600&auto=format&fit=crop"/></div>
+          <h3>Smart India Hackathon — Winner</h3>
+          <p class="notice">Invoice reconciliation system; 20,000+ contestants.</p>
+        </article>
+        <article class="card">
+          <div class="thumb"><img alt="Mars visualization" src="https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?q=80&w=1600&auto=format&fit=crop"/></div>
+          <h3>NASA Space Apps — Top Honor</h3>
+          <p class="notice">Unreal Engine game for Mars colonization.</p>
+        </article>
+        <article class="card">
+          <div class="thumb"><img alt="Social media award" src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop"/></div>
+          <h3>Social Media Champ</h3>
+          <p class="notice">Smart City Hackathon; awarded by IAS Jayesh Ranjan.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="certs" class="container">
+      <h2 class="row-title">Certifications</h2>
+      <div class="panel">
+        <div class="skills">
+          <span class="s">AWS Certified Solutions Architect</span>
+          <span class="s">Tableau Desktop Specialist</span>
+          <span class="s">Many more...</span>
+          <span class="s">to go...</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer id="contact" class="container">
+    <div class="foot">
+      <div>
+        <div style="font-weight:800;font-size:18px">Let’s build something data‑driven.</div>
+        <div class="mono">rnagamanogna@gmail.com • +1 410‑558‑7488</div>
+      </div>
+      <div class="social">
+  <!-- TODO: Replace # with real profile links -->
+  <!-- <a href="https://www.linkedin.com/in/rn-manogna/" target="_blank" rel="noopener">LinkedIn</a> -->
+        <a href="https://medium.com/@rn.manogna" target="_blank" rel="noopener">Medium</a>
+        <a href="https://calendly.com/rnagamanogna/30min?" target="_blank" rel="noopener">Calendly</a>
+    <!-- <a href="https://github.com/Manognarayasam" target="_blank" rel="noopener">GitHub</a> -->
+      </div>
+    </div>
+    <p class="notice" style="margin-top:12px">© <span id="yr"></span> Manogna Rayasam</p>
+  </footer>
+
+    <script>
+      document.getElementById('yr').textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>

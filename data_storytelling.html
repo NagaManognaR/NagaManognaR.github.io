@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Storytelling with My Own Data</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Data Storytelling with My Own Data</h1>
+        <nav>
+            <a href="netflix_style_portfolio_manogna_rayasam.html">Home</a>
+        </nav>
+    </header>
+    <main>
+      <div class="panel">
+        <h3 style="color:#e50914;font-size:1.2rem;margin-bottom:10px">Visualizations of Myself</h3>
+        <div style="margin-bottom:24px">
+          <strong>Timeline of Skills Learned</strong>
+          <canvas id="timelineChart" width="400" height="180"></canvas>
+        </div>
+        <div style="margin-bottom:24px">
+          <strong>Word Cloud of My Projects</strong>
+          <canvas id="wordCloudChart" width="400" height="180"></canvas>
+        </div>
+        <div style="margin-bottom:24px">
+          <strong>Sankey Diagram: How My Skills Connect to Industries</strong>
+          <canvas id="sankeyChart" width="400" height="180"></canvas>
+        </div>
+        <ul style="font-size:16px;line-height:1.7">
+          <li>Number of datasets analyzed: <span style="font-weight:700;color:#e50914">42+</span></li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h3 style="color:#e50914;font-size:1.2rem;margin-bottom:10px">Fun Stats</h3>
+        <ul style="font-size:16px;line-height:1.7">
+          <li>Models built: <span style="font-weight:700;color:#e50914">18</span></li>
+          <li>Cups of coffee consumed: <span style="font-weight:700;color:#e50914">0 (I prefer tea or water!)</span></li>
+          <li>Hackathons joined: <span style="font-weight:700;color:#e50914">5</span></li>
+        </ul>
+      </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Timeline of Skills Learned
+      const timelineCtx = document.getElementById('timelineChart').getContext('2d');
+      new Chart(timelineCtx, {
+        type: 'line',
+        data: {
+          labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
+          datasets: [{
+            label: 'Skills Learned',
+            data: [2, 4, 7, 10, 14, 18],
+            borderColor: '#e50914',
+            backgroundColor: 'rgba(229,9,20,0.2)',
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          scales: { y: { beginAtZero: true } }
+        }
+      });
+      // Word Cloud of Projects (simple bar chart for demo)
+      const wordCloudCtx = document.getElementById('wordCloudChart').getContext('2d');
+      new Chart(wordCloudCtx, {
+        type: 'bar',
+        data: {
+          labels: ['AI', 'RAG', 'LLM', 'Dashboard', 'Churn', 'NLP', 'AWS', 'Azure'],
+          datasets: [{
+            label: 'Project Frequency',
+            data: [4, 3, 2, 2, 1, 2, 2, 2],
+            backgroundColor: '#e50914'
+          }]
+        },
+        options: {
+          plugins: { legend: { display: false } },
+          indexAxis: 'y',
+          scales: { x: { beginAtZero: true } }
+        }
+      });
+      // Sankey Diagram (simulate with a grouped bar chart for demo)
+      const sankeyCtx = document.getElementById('sankeyChart').getContext('2d');
+      new Chart(sankeyCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Tech', 'Healthcare', 'Education', 'Business'],
+          datasets: [
+            { label: 'Python', data: [1, 1, 1, 1], backgroundColor: '#e50914' },
+            { label: 'RAG', data: [1, 0, 1, 0], backgroundColor: '#b20710' },
+            { label: 'Tableau', data: [0, 1, 1, 1], backgroundColor: '#9ca3af' }
+          ]
+        },
+        options: {
+          plugins: { legend: { position: 'bottom' } },
+          scales: { x: { stacked: true }, y: { stacked: true, beginAtZero: true } }
+        }
+      });
+    </script>
+</body>
+</html>

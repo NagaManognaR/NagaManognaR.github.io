@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manogna Rayasam — Data Story</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <style>
+      .hero-flex {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+      }
+      .hero-main {
+        flex: 0 1 70%;
+        min-width: 0;
+      }
+      .hero-img {
+        flex: 0 1 30%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hero-img img {
+        width: 420px;
+        height: 420px;
+        object-fit: contain;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+        background: none;
+        display: block;
+        border-radius: 0;
+      }
+      @media (max-width: 900px) {
+        .hero-flex {
+          flex-direction: column-reverse;
+          gap: 18px;
+        }
+        .hero-img img {
+          width: 200px;
+          height: 200px;
+          border-radius: 0;
+        }
+      }
+      :root {
+        --bg: #0b0b0f; /* deep noir */
+        --bg-2: #121216; /* panels */
+        --text: #f3f4f6; /* body */
+        --muted: #a3a3a3; /* secondary */
+        --accent: #e50914; /* Netflix red (sparingly) */
+        --ai: #3ea6ff; /* electric blue for AI cues */
+        --card: #16161c; /* card bg */
+        --chip: #1f2430; /* chip bg */
+        --ring: #2b2f3a;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        color: var(--text);
+        background: radial-gradient(
+            1200px 800px at 20% -10%,
+            #182141 0%,
+            rgba(24, 33, 65, 0) 60%
+          ),
+          radial-gradient(
+            900px 600px at 90% 10%,
+            #191f2e 0%,
+            rgba(25, 31, 46, 0) 50%
+          ),
+          var(--bg);
+        line-height: 1.4;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+
+      /* Header */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(10px);
+        background: linear-gradient(
+          180deg,
+          rgba(11, 11, 15, 0.9),
+          rgba(11, 11, 15, 0.4)
+        );
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 64px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+      }
+      .brand .logo {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--accent), #7a0b10);
+        box-shadow: 0 6px 20px rgba(229, 9, 20, 0.35);
+        font-family: Poppins, Inter, sans-serif;
+        font-weight: 800;
+      }
+      nav ul {
+        display: flex;
+        gap: 18px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      nav a {
+        color: #e5e7eb;
+        opacity: 0.9;
+      }
+      nav a:hover {
+        opacity: 1;
+      }
+      .cta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .btn {
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--ring);
+        background: #15161b;
+        color: #e5e7eb;
+        font-weight: 600;
+      }
+      .btn.primary {
+        background: var(--accent);
+        border-color: #c80812;
+      }
+      .btn.ghost {
+        background: transparent;
+      }
+
+      /* Hero */
+      .hero {
+        position: relative;
+        padding: 48px 0 16px;
+        overflow: hidden;
+      }
+      .hero .bg-layer {
+        position: absolute;
+        inset: -2px;
+        background: url("https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=1974&auto=format&fit=crop")
+          center/cover no-repeat;
+        opacity: 0.15;
+        filter: grayscale(40%) contrast(110%);
+      }
+      .hero .overlay {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          60% 60% at 20% 20%,
+          rgba(62, 166, 255, 0.28),
+          rgba(0, 0, 0, 0) 60%
+        );
+      }
+      .hero-content {
+        position: relative;
+      }
+      .overline {
+        color: var(--ai);
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+      }
+      .title {
+        font-family: Poppins, Inter, sans-serif;
+        font-size: 56px;
+        line-height: 1.05;
+        margin: 12px 0;
+      }
+      .subtitle {
+        color: #d1d5db;
+        font-size: 1.125rem;
+        max-width: 920px;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 18px;
+      }
+      .badges {
+        display: flex;
+        gap: 10px;
+        margin-top: 14px;
+        flex-wrap: wrap;
+      }
+      .badge {
+        background: linear-gradient(180deg, #1a1f2a, #12141a);
+        border: 1px solid var(--ring);
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 0.9rem;
+        color: #cbd5e1;
+      }
+
+      /* Rows */
+      section {
+        margin: 42px 0;
+      }
+      .row-header {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .row-title {
+        font-family: Poppins, Inter, sans-serif;
+        font-size: 1.35rem;
+      }
+      .scroller {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .scroll-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 999px;
+        background: #15161b;
+        border: 1px solid var(--ring);
+        display: grid;
+        place-items: center;
+        cursor: pointer;
+      }
+      .carousel {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: clamp(220px, 24vw, 340px);
+        gap: 14px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 8px;
+      }
+      .carousel::-webkit-scrollbar {
+        height: 10px;
+      }
+      .carousel::-webkit-scrollbar-thumb {
+        background: #232630;
+        border-radius: 10px;
+      }
+
+      /* Cards */
+      .card {
+        position: relative;
+        background: var(--card);
+        border: 1px solid var(--ring);
+        border-radius: 16px;
+        overflow: hidden;
+        scroll-snap-align: start;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+      }
+      .poster {
+        aspect-ratio: 16/9;
+        background: #0f1117;
+        position: relative;
+      }
+      .poster img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: saturate(1.05);
+      }
+      .poster .gradient {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0) 40%,
+          rgba(0, 0, 0, 0.8)
+        );
+      }
+      .meta {
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+      }
+      .chips {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .chip {
+        background: var(--chip);
+        color: #cbd5e1;
+        font-size: 0.75rem;
+        border: 1px solid #2b3442;
+        padding: 4px 8px;
+        border-radius: 999px;
+      }
+      .metric {
+        background: rgba(229, 9, 20, 0.95);
+        color: white;
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-weight: 700;
+        font-size: 0.8rem;
+      }
+      .content {
+        padding: 12px;
+      }
+      .content .name {
+        font-weight: 700;
+      }
+      .content .desc {
+        color: #c0c6d3;
+        font-size: 0.92rem;
+      }
+      .card .action {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0, 0, 0, 0.55);
+        border: 1px solid var(--ring);
+        color: #e5e7eb;
+        padding: 8px 10px;
+        border-radius: 10px;
+        display: flex;
+        gap: 6px;
+        align-items: center;
+        cursor: pointer;
+        font-weight: 600;
+      }
+
+      /* Skills Grid */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+      }
+      .skillcard {
+        background: var(--card);
+        border: 1px solid var(--ring);
+        border-radius: 16px;
+        padding: 14px;
+        min-height: 140px;
+      }
+      .skillcard h4 {
+        margin: 2px 0 8px 0;
+        font-family: Poppins, Inter, sans-serif;
+      }
+      .skillchips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      /* Footer */
+      footer {
+        margin: 64px 0 24px;
+        color: #a9b1c6;
+      }
+      .links {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      /* Modal */
+      .modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        place-items: center;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        z-index: 60;
+      }
+      .modal.open {
+        display: grid;
+      }
+      .modal .sheet {
+        width: min(920px, 92vw);
+        background: linear-gradient(180deg, #14151b, #0f1117);
+        border: 1px solid #2a2f3b;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+      }
+      .sheet .cover {
+        aspect-ratio: 16/6;
+        background: #0f1117;
+        position: relative;
+      }
+      .sheet .cover img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .sheet .cover .fade {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0) 30%,
+          rgba(0, 0, 0, 0.9)
+        );
+      }
+      .sheet .body {
+        padding: 20px;
+      }
+      .sheet .topline {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .sheet h3 {
+        margin: 10px 0 8px 0;
+        font-family: Poppins, Inter, sans-serif;
+      }
+      .sheet .two {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 20px;
+      }
+      .sheet .section h5 {
+        margin: 10px 0 8px 0;
+        color: #e5e7eb;
+      }
+      .kbd {
+        background: #1e2633;
+        padding: 2px 8px;
+        border: 1px solid #2f3a4b;
+        border-radius: 6px;
+        font-size: 0.85rem;
+      }
+      .btns {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 900px) {
+        .title {
+          font-size: 38px;
+        }
+        .sheet .two {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <div class="brand">
+          <a
+            href="#"
+            onclick="window.scrollTo({top:0,behavior:'smooth'});return false;"
+            class="logo"
+            >MR</a
+          >
+          <!-- <div>Manogna Rayasam</div> -->
+        </div>
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="#training-data">My Training Data</a></li>
+            <li><a href="#fine-tuning">Fine-Tuning</a></li>
+            <li><a href="#inference-mode">Inference Mode</a></li>
+            <li><a href="#deployments">Deployments</a></li>
+          </ul>
+        </nav>
+        <div class="cta">
+          <a class="btn ghost" href="#contact"
+            ><i class="ri-send-plane-line"></i> Contact</a
+          >
+          <a class="btn primary" href="#resume"
+            ><i class="ri-download-2-line"></i> Resume</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="bg-layer" aria-hidden="true"></div>
+      <div class="overlay" aria-hidden="true"></div>
+      <div class="container hero-content hero-flex">
+        <div class="hero-main">
+          <!-- <div class="overline">Data story • LLM-first portfolio</div> -->
+          <div class="overline">
+            Welcome to my little kingdom on the internet! 👋
+          </div>
+          <h1 class="title">
+            I'm <span style="color: var(--ai)">Manogna Rayasam</span>
+          </h1>
+          <!-- <h1 class="title">
+            Turning context into insight—<span style="color: var(--ai)"
+              >inference mode</span
+            >
+            on.
+          </h1> -->
+          <p class="subtitle">
+            Data Scientist with 4+ years across analytics, ML, and data
+            engineering. I ship LLM/RAG products and measurable outcomes on AWS
+            & Azure—dashboards, pipelines, and models that move metrics.
+          </p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#fine-tuning"
+              ><i class="ri-play-fill"></i> Play demo reel</a
+            >
+            <a class="btn" href="#deployments"
+              ><i class="ri-rocket-2-line"></i> See deployments</a
+            >
+          </div>
+          <div class="badges">
+            <span class="badge">LLMs • RAG • Prompt/Context Engineering</span>
+            <span class="badge">AWS & Azure</span>
+            <span class="badge">Dashboards & MLOps</span>
+          </div>
+        </div>
+        <div class="hero-img">
+          <img src="Manogna_bgless.png" alt="Manogna Rayasam" />
+        </div>
+      </div>
+    </section>
+
+    <main class="container">
+      <!-- Row: My Training Data -->
+      <section id="training-data" aria-label="My Training Data">
+        <div class="row-header">
+          <h2 class="row-title">My Training Data</h2>
+          <div class="scroller">
+            <button class="scroll-btn" data-scroll="training">
+              <i class="ri-arrow-left-s-line"></i>
+            </button>
+            <button class="scroll-btn" data-scroll="training" data-dir="right">
+              <i class="ri-arrow-right-s-line"></i>
+            </button>
+          </div>
+        </div>
+        <div class="carousel" id="carousel-training">
+          <!-- Education -->
+          <article class="card" data-modal-target="modal-umbc">
+            <div class="poster">
+              <img
+                src="https://picsum.photos/seed/umbc/1200/675"
+                alt="UMBC campus abstract"
+              />
+              <div class="gradient"></div>
+              <div class="meta">
+                <div class="chips">
+                  <span class="chip">M.S. Data Science</span>
+                  <span class="chip">2024–2025</span>
+                </div>
+                <div class="metric">Grad 2025</div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="name">UMBC • Baltimore, MD</div>
+              <div class="desc">
+                Masters in Data Science. Focus: LLMs, analytics, dashboards.
+              </div>
+              <div class="action">
+                <i class="ri-information-line"></i> Details
+              </div>
+            </div>
+          </article>
+          <!-- Certs -->
+          <article class="card" data-modal-target="modal-aws">
+            <div class="poster">
+              <img
+                src="https://picsum.photos/seed/aws/1200/675"
+                alt="AWS abstract"
+              />
+              <div class="gradient"></div>
+              <div class="meta">
+                <div class="chips">
+                  <span class="chip">AWS SAA</span>
+                  <span class="chip">Cloud</span>
+                </div>
+                <div class="metric">Certified</div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="name">AWS Certified Solutions Architect</div>
+              <div class="desc">
+                Architected scalable, secure pipelines and model serving on AWS.
+              </div>
+              <div class="action">
+                <i class="ri-information-line"></i> Details
+              </div>
+            </div>
+          </article>
+          <article class="card" data-modal-target="modal-tableau">
+            <div class="poster">
+              <img
+                src="https://picsum.photos/seed/tableau/1200/675"
+                alt="Tableau charts"
+              />
+              <div class="gradient"></div>
+              <div class="meta">
+                <div class="chips">
+                  <span class="chip">BI</span>
+                  <span class="chip">Dashboards</span>
+                </div>
+                <div class="metric">Specialist</div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="name">Tableau Desktop Specialist</div>
+              <div class="desc">
+                Interactive storytelling and metrics-driven visuals.
+              </div>
+              <div class="action">
+                <i class="ri-information-line"></i> Details
+              </div>
+            </div>
+          </article>
+          <article class="card" data-modal-target="modal-research">
+            <div class="poster">
+              <img
+                src="https://picsum.photos/seed/research/1200/675"
+                alt="Research notebooks"
+              />
+              <div class="gradient"></div>
+              <div class="meta">
+                <div class="chips">
+                  <span class="chip">Research</span>
+                  <span class="chip">W&B</span>
+                </div>
+                <div class="metric">Paper</div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="name">Designing Nudges for LLMs</div>
+              <div class="desc">
+                Prompt-nudge evaluation pipeline measuring accuracy & safety.
+              </div>
+              <div class="action">
+                <i class="ri-information-line"></i> Details
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Row: Fine-Tuning -->
+      <section id="fine-tuning" aria-label="Fine-Tuning">
+        <div class="row-header">
+          <h2 class="row-title">Fine-Tuning</h2>
+          <div class="scroller">
+            <button class="scroll-btn" data-scroll="ft">
+              <i class="ri-arrow-left-s-line"></i>
+            </button>
+            <button class="scroll-btn" data-scroll="ft" data-dir="right">
+              <i class="ri-arrow-right-s-line"></i>
+            </button>
+          </div>
+        </div>
+        <div class="carousel" id="carousel-ft">
+          <!-- InsightAI -->
+          <article class="card" data-modal-target="modal-insightai">
+            <div class="poster">
+              <img
+                src="https://picsum.photos/seed/insightai/1200/675"
+                alt="Interview analysis interface"
+              />
+              <div class="gradient"></div>
+              <div class="meta">
+                <div class="chips">
+                  <span class="chip">GPT-4o</span>
+                  <span class="chip">RAG</span>
+                  <span class="chip">Streamlit</span>
+                </div>
+                <div class="metric">Live</div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="name">InsightAI — Interview Analysis</div>
+              <div class="desc">
+                Multimodal interviewer with real-time feedback & reports.
+              </div>
+              <div class="action">
+                <i class="ri-play-mini-fill"></i> Case Study
+              </div>
+            </div>
+          </article>
+
+          <!-- Support Genie AI -->
+          <article class="card" data-modal-target="modal-genie">
+            <div class="poster">
+              <img
+                src="https://picsum.photos/seed/genie/1200/675"
+                alt="Student support chatbot"
+              />
+              <div class="gradient"></div>
+              <div class="meta">
+                <div class="chips">
+                  <span class="chip">Agentic RAG</span>
+                  <span class="chip">Agno</span>
+                  <span class="chip">Chainlit</span>
+                </div>
+                <div class="metric">Cited</div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="name">Support Genie AI — ISSS Assistant</div>
+              <div class="desc">
+                Personalized, cited answers with fresh web-scraped policy.
+              </div>
+              <div class="action">
+                <i class="ri-play-mini-fill"></i> Case Study
+              </div>
+            </div>
+          </article>
+
+          <!-- Uber FHV -->
+          <article class="card" data-modal-target="modal-uber">
+            <div class="poster">
+              <img
+                src="https://picsum.photos/seed/uber/1200/675"
+                alt="NYC taxi data map"
+              />
+              <div class="gradient"></div>
+              <div class="meta">
+                <div class="chips">
+                  <span class="chip">PySpark</span>
+                  <span class="chip">5M+ trips</span>
+                </div>
+                <div class="metric">Peaks 30%</div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="name">Uber NYC For-Hire Vehicles</div>
+              <div class="desc">
+                Hotspots & surge strategy via Spark SQL on 5M+ rides.
+              </div>
+              <div class="action">
+                <i class="ri-play-mini-fill"></i> Case Study
+              </div>
+            </div>
+          </article>
+
+          <!-- Alzheimer CNN -->
+          <article class="card" data-modal-target="modal-alz">
+            <div class="poster">
+              <img
+                src="https://picsum.photos/seed/alz/1200/675"
+                alt="Brain MRI with heatmap"
+              />
+              <div class="gradient"></div>
+              <div class="meta">
+                <div class="chips">
+                  <span class="chip">CNN</span>
+                  <span class="chip">Grad-CAM</span>
+                </div>
+                <div class="metric">Acc 92%</div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="name">Alzheimer’s Diagnosis (CNN)</div>
+              <div class="desc">
+                Preprocessing→modeling→interpretability for clinical trust.
+              </div>
+              <div class="action">
+                <i class="ri-play-mini-fill"></i> Case Study
+              </div>
+            </div>
+          </article>
+
+          <!-- Churn Risk -->
+          <article class="card" data-modal-target="modal-churn">
+            <div class="poster">
+              <img
+                src="https://picsum.photos/seed/churn/1200/675"
+                alt="Churn dashboard"
+              />
+              <div class="gradient"></div>
+              <div class="meta">
+                <div class="chips">
+                  <span class="chip">SageMaker</span>
+                  <span class="chip">XGBoost</span>
+                </div>
+                <div class="metric">-20% churn</div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="name">Real-Time Churn Risk Scoring</div>
+              <div class="desc">
+                Batch + realtime scoring with SHAP, alerts & monitoring.
+              </div>
+              <div class="action">
+                <i class="ri-play-mini-fill"></i> Case Study
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Inference Mode (skills) -->
+      <section id="inference-mode" aria-label="Inference Mode">
+        <div class="row-header">
+          <h2 class="row-title">Inference Mode</h2>
+        </div>
+        <div class="skills-grid">
+          <div class="skillcard">
+            <h4>LLM & RAG</h4>
+            <div class="skillchips">
+              <span class="chip">RAG</span><span class="chip">Prompt Eng</span
+              ><span class="chip">Context Eng</span
+              ><span class="chip">HF Transformers</span
+              ><span class="chip">LangChain</span><span class="chip">Agno</span
+              ><span class="chip">Semantic Kernel</span
+              ><span class="chip">FAISS</span><span class="chip">Pinecone</span>
+            </div>
+          </div>
+          <div class="skillcard">
+            <h4>Serving & Apps</h4>
+            <div class="skillchips">
+              <span class="chip">FastAPI</span
+              ><span class="chip">Streamlit</span
+              ><span class="chip">Chainlit</span><span class="chip">React</span
+              ><span class="chip">Node</span><span class="chip">Docker</span>
+            </div>
+          </div>
+          <div class="skillcard">
+            <h4>Cloud</h4>
+            <div class="skillchips">
+              <span class="chip">AWS: EC2/S3/RDS/SQS/SageMaker/Bedrock</span>
+              <span class="chip">Azure: OpenAI/AI Search/SQL/ML</span>
+              <span class="chip">GCP</span>
+              <span class="chip">Hostinger VPS</span>
+            </div>
+          </div>
+          <div class="skillcard">
+            <h4>Data & ETL</h4>
+            <div class="skillchips">
+              <span class="chip">Spark</span><span class="chip">Hadoop</span
+              ><span class="chip">Kafka</span><span class="chip">SQL</span
+              ><span class="chip">Airflow*</span>
+            </div>
+          </div>
+          <div class="skillcard">
+            <h4>ML & Viz</h4>
+            <div class="skillchips">
+              <span class="chip">scikit-learn</span
+              ><span class="chip">XGBoost</span
+              ><span class="chip">LightGBM</span>
+              <span class="chip">TensorFlow</span><span class="chip">Keras</span
+              ><span class="chip">PyTorch</span>
+              <span class="chip">Tableau</span><span class="chip">Power BI</span
+              ><span class="chip">Plotly</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Deployments -->
+      <section id="deployments" aria-label="Deployments">
+        <div class="row-header">
+          <h2 class="row-title">Deployments</h2>
+          <div class="scroller">
+            <button class="scroll-btn" data-scroll="dep">
+              <i class="ri-arrow-left-s-line"></i>
+            </button>
+            <button class="scroll-btn" data-scroll="dep" data-dir="right">
+              <i class="ri-arrow-right-s-line"></i>
+            </button>
+          </div>
+        </div>
+        <div class="carousel" id="carousel-dep">
+          <!-- Experience cards -->
+          <article class="card" data-modal-target="modal-umbc-exp">
+            <div class="poster">
+              <img
+                src="https://picsum.photos/seed/umbcwork/1200/675"
+                alt="UMBC dashboards"
+              />
+              <div class="gradient"></div>
+              <div class="meta">
+                <div class="chips">
+                  <span class="chip">Dashboards</span
+                  ><span class="chip">Insights</span>
+                </div>
+                <div class="metric">2025</div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="name">UMBC • Data Science Intern</div>
+              <div class="desc">
+                5-year outcomes analysis, Tableau, student-facing flyers.
+              </div>
+              <div class="action">
+                <i class="ri-information-line"></i> Case Study
+              </div>
+            </div>
+          </article>
+          <article class="card" data-modal-target="modal-kanhel">
+            <div class="poster">
+              <img
+                src="https://picsum.photos/seed/kanhel/1200/675"
+                alt="RAG assistant"
+              />
+              <div class="gradient"></div>
+              <div class="meta">
+                <div class="chips">
+                  <span class="chip">RAG</span><span class="chip">Azure</span>
+                </div>
+                <div class="metric">+18% early</div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="name">Kanhel Consulting • Data Scientist</div>
+              <div class="desc">
+                RAG on Azure + Pinecone; anomaly detection (+18% early ID).
+              </div>
+              <div class="action">
+                <i class="ri-information-line"></i> Case Study
+              </div>
+            </div>
+          </article>
+          <article class="card" data-modal-target="modal-cognizant">
+            <div class="poster">
+              <img
+                src="https://picsum.photos/seed/cognizant/1200/675"
+                alt="NLP tickets"
+              />
+              <div class="gradient"></div>
+              <div class="meta">
+                <div class="chips">
+                  <span class="chip">NLP</span><span class="chip">Tableau</span>
+                </div>
+                <div class="metric">-15% churn</div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="name">Cognizant • Data Scientist</div>
+              <div class="desc">
+                Sentiment & themes from tickets; decisions ↑30%; TAT ↓40%.
+              </div>
+              <div class="action">
+                <i class="ri-information-line"></i> Case Study
+              </div>
+            </div>
+          </article>
+          <article class="card" data-modal-target="modal-awards">
+            <div class="poster">
+              <img
+                src="https://picsum.photos/seed/awards/1200/675"
+                alt="Awards stage"
+              />
+              <div class="gradient"></div>
+              <div class="meta">
+                <div class="chips"><span class="chip">Hackathons</span></div>
+                <div class="metric">1st</div>
+              </div>
+            </div>
+            <div class="content">
+              <div class="name">Awards & Hackathons</div>
+              <div class="desc">
+                Smart India (1st/20k+), NASA Space Apps (top), Social Media
+                Champ.
+              </div>
+              <div class="action"><i class="ri-trophy-line"></i> View</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Contact / Resume placeholders -->
+      <section id="resume">
+        <div class="row-header"><h2 class="row-title">Resume</h2></div>
+        <p>
+          Download the latest resume (PDF).
+          <!-- TODO: Replace with actual PDF link -->
+          <a class="btn" href="#">Download</a>
+        </p>
+      </section>
+
+      <section id="contact">
+        <div class="row-header"><h2 class="row-title">Contact</h2></div>
+        <p>
+          Email:
+          <a href="mailto:rnagamanogna@gmail.com">rnagamanogna@gmail.com</a> •
+          Maryland, USA
+        </p>
+        <div class="links">
+          <!-- TODO: Replace with actual profile URLs -->
+          <a class="btn ghost" href="#"
+            ><i class="ri-linkedin-box-fill"></i> LinkedIn</a
+          >
+          <a class="btn ghost" href="#"
+            ><i class="ri-github-fill"></i> GitHub</a
+          >
+          <a class="btn ghost" href="#"
+            ><i class="ri-medium-fill"></i> Medium</a
+          >
+          <a class="btn ghost" href="#"
+            ><i class="ri-external-link-line"></i> Portfolio</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <footer class="container">
+      <div>
+        © <span id="year"></span> Manogna Rayasam • Built with HTML/CSS •
+        Netflix-style layout
+      </div>
+    </footer>
+
+    <!-- Modals (Detail Sheets) -->
+
+    <!-- UMBC Education -->
+    <div
+      class="modal"
+      id="modal-umbc"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="umbc-title"
+    >
+      <div class="sheet">
+        <div class="cover">
+          <img src="https://picsum.photos/seed/umbc/1600/600" alt="UMBC" />
+          <div class="fade"></div>
+        </div>
+        <div class="body">
+          <div class="topline">
+            <h3 id="umbc-title">UMBC — M.S. in Data Science (2024–2025)</h3>
+            <button class="btn" data-close>Close</button>
+          </div>
+          <div class="two">
+            <div class="section">
+              <h5>Focus</h5>
+              <ul>
+                <li>LLMs/RAG, analytics engineering, experimentation.</li>
+                <li>BI storytelling for student outcomes.</li>
+              </ul>
+              <h5>Highlights</h5>
+              <ul>
+                <li>
+                  Projects: InsightAI, Support Genie AI, Uber FHV Big Data.
+                </li>
+                <li>Coursework emphasizing ML systems and cloud deployment.</li>
+              </ul>
+            </div>
+            <div class="section">
+              <h5>Stack</h5>
+              <div class="skillchips">
+                <span class="chip">Python</span><span class="chip">PyTorch</span
+                ><span class="chip">Tableau</span
+                ><span class="chip">Azure</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AWS Cert -->
+    <div
+      class="modal"
+      id="modal-aws"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="aws-title"
+    >
+      <div class="sheet">
+        <div class="cover">
+          <img src="https://picsum.photos/seed/aws/1600/600" alt="AWS" />
+          <div class="fade"></div>
+        </div>
+        <div class="body">
+          <div class="topline">
+            <h3 id="aws-title">AWS Solutions Architect — Certified</h3>
+            <button class="btn" data-close>Close</button>
+          </div>
+          <div class="two">
+            <div class="section">
+              <h5>What it means</h5>
+              <ul>
+                <li>Designs resilient, cost-aware data and ML systems.</li>
+                <li>Secures endpoints & data flows (IAM, VPC, KMS).</li>
+              </ul>
+            </div>
+            <div class="section">
+              <h5>Services</h5>
+              <div class="skillchips">
+                <span class="chip">EC2</span><span class="chip">S3</span
+                ><span class="chip">RDS</span><span class="chip">SageMaker</span
+                ><span class="chip">Bedrock</span
+                ><span class="chip">CloudWatch</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tableau Specialist -->
+    <div
+      class="modal"
+      id="modal-tableau"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="tb-title"
+    >
+      <div class="sheet">
+        <div class="cover">
+          <img
+            src="https://picsum.photos/seed/tableau/1600/600"
+            alt="Tableau"
+          />
+          <div class="fade"></div>
+        </div>
+        <div class="body">
+          <div class="topline">
+            <h3 id="tb-title">Tableau Desktop Specialist</h3>
+            <button class="btn" data-close>Close</button>
+          </div>
+          <div class="two">
+            <div class="section">
+              <h5>Focus</h5>
+              <ul>
+                <li>Interactive dashboards; drilldowns and filters.</li>
+                <li>Outcome storytelling for decision-makers.</li>
+              </ul>
+            </div>
+            <div class="section">
+              <h5>Tooling</h5>
+              <div class="skillchips">
+                <span class="chip">Tableau</span
+                ><span class="chip">Power BI</span
+                ><span class="chip">Plotly</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Research -->
+    <div
+      class="modal"
+      id="modal-research"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="rs-title"
+    >
+      <div class="sheet">
+        <div class="cover">
+          <img
+            src="https://picsum.photos/seed/research/1600/600"
+            alt="Research"
+          />
+          <div class="fade"></div>
+        </div>
+        <div class="body">
+          <div class="topline">
+            <h3 id="rs-title">Research: Designing Nudges for LLMs</h3>
+            <button class="btn" data-close>Close</button>
+          </div>
+          <div class="two">
+            <div class="section">
+              <h5>Problem → Approach → Results</h5>
+              <ul>
+                <li>
+                  <span class="kbd">Problem</span>: Reliability & faithfulness
+                  vary by prompt.
+                </li>
+                <li>
+                  <span class="kbd">Approach</span>: Systematic evaluation of
+                  prompt templates, few-shots, tools.
+                </li>
+                <li>
+                  <span class="kbd">Results</span>: Quantified
+                  accuracy/completeness/safety tradeoffs.
+                </li>
+              </ul>
+            </div>
+            <div class="section">
+              <h5>Stack</h5>
+              <div class="skillchips">
+                <span class="chip">Python</span
+                ><span class="chip">HF/OpenAI</span
+                ><span class="chip">W&B</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- InsightAI Modal -->
+    <div
+      class="modal"
+      id="modal-insightai"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="insight-title"
+    >
+      <div class="sheet">
+        <div class="cover">
+          <img
+            src="https://picsum.photos/seed/insightai/1600/600"
+            alt="InsightAI"
+          />
+          <div class="fade"></div>
+        </div>
+        <div class="body">
+          <div class="topline">
+            <h3 id="insight-title">
+              InsightAI — Research-grade Interview Analysis
+            </h3>
+            <button class="btn" data-close>Close</button>
+          </div>
+          <div class="two">
+            <div class="section">
+              <h5>Logline</h5>
+              <p>
+                Multimodal interviewer with real-time feedback for behavioral
+                studies; generates performance reports.
+              </p>
+              <h5>Highlights</h5>
+              <ul>
+                <li>
+                  Streamlit + GPT-4o + Whisper, deployed on VPS for global
+                  access.
+                </li>
+                <li>
+                  Login, recording, transcription, insights; exports reports.
+                </li>
+              </ul>
+            </div>
+            <div class="section">
+              <h5>Stack</h5>
+              <div class="skillchips">
+                <span class="chip">Streamlit</span
+                ><span class="chip">OpenAI</span
+                ><span class="chip">MongoDB</span><span class="chip">VPS</span>
+              </div>
+              <div class="btns">
+                <a class="btn" href="#">Live demo</a>
+                <a class="btn" href="#">GitHub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Support Genie Modal -->
+    <div
+      class="modal"
+      id="modal-genie"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="genie-title"
+    >
+      <div class="sheet">
+        <div class="cover">
+          <img
+            src="https://picsum.photos/seed/genie/1600/600"
+            alt="Support Genie"
+          />
+          <div class="fade"></div>
+        </div>
+        <div class="body">
+          <div class="topline">
+            <h3 id="genie-title">Support Genie AI — Agentic RAG for ISSS</h3>
+            <button class="btn" data-close>Close</button>
+          </div>
+          <div class="two">
+            <div class="section">
+              <h5>Logline</h5>
+              <p>
+                Conversational assistant that answers student immigration
+                queries with citations and fresh policy content.
+              </p>
+              <h5>Highlights</h5>
+              <ul>
+                <li>
+                  Agno + Chainlit, FAISS vector store, web scraping pipeline.
+                </li>
+                <li>Multi-turn memory; personalized responses with sources.</li>
+              </ul>
+            </div>
+            <div class="section">
+              <h5>Stack</h5>
+              <div class="skillchips">
+                <span class="chip">Agno</span><span class="chip">Chainlit</span
+                ><span class="chip">FAISS</span>
+              </div>
+              <div class="btns">
+                <a class="btn" href="#">Live demo</a>
+                <a class="btn" href="#">GitHub</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Uber Modal -->
+    <div
+      class="modal"
+      id="modal-uber"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="uber-title"
+    >
+      <div class="sheet">
+        <div class="cover">
+          <img src="https://picsum.photos/seed/uber/1600/600" alt="Uber FHV" />
+          <div class="fade"></div>
+        </div>
+        <div class="body">
+          <div class="topline">
+            <h3 id="uber-title">
+              Uber NYC For-Hire Vehicles — Big Data Analysis
+            </h3>
+            <button class="btn" data-close>Close</button>
+          </div>
+          <div class="two">
+            <div class="section">
+              <h5>Approach</h5>
+              <ul>
+                <li>
+                  PySpark/Spark SQL on 5M+ trips; engineered geo/time features.
+                </li>
+                <li>Clustered hotspots; peak-hour demand (~30%).</li>
+              </ul>
+            </div>
+            <div class="section">
+              <h5>Stack</h5>
+              <div class="skillchips">
+                <span class="chip">PySpark</span><span class="chip">Hadoop</span
+                ><span class="chip">Dashboards</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alzheimer Modal -->
+    <div
+      class="modal"
+      id="modal-alz"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="alz-title"
+    >
+      <div class="sheet">
+        <div class="cover">
+          <img
+            src="https://picsum.photos/seed/alz/1600/600"
+            alt="Alzheimer CNN"
+          />
+          <div class="fade"></div>
+        </div>
+        <div class="body">
+          <div class="topline">
+            <h3 id="alz-title">Alzheimer’s Diagnosis — CNN + Grad-CAM</h3>
+            <button class="btn" data-close>Close</button>
+          </div>
+          <div class="two">
+            <div class="section">
+              <h5>Highlights</h5>
+              <ul>
+                <li>
+                  Preprocessing: normalization, augmentation, skull-stripping.
+                </li>
+                <li>Accuracy 92% (held-out); Grad-CAM for interpretability.</li>
+              </ul>
+            </div>
+            <div class="section">
+              <h5>Stack</h5>
+              <div class="skillchips">
+                <span class="chip">TensorFlow</span
+                ><span class="chip">Keras</span><span class="chip">Python</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Churn Modal -->
+    <div
+      class="modal"
+      id="modal-churn"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="churn-title"
+    >
+      <div class="sheet">
+        <div class="cover">
+          <img src="https://picsum.photos/seed/churn/1600/600" alt="Churn" />
+          <div class="fade"></div>
+        </div>
+        <div class="body">
+          <div class="topline">
+            <h3 id="churn-title">Real-Time Churn Risk — SageMaker XGBoost</h3>
+            <button class="btn" data-close>Close</button>
+          </div>
+          <div class="two">
+            <div class="section">
+              <h5>Impact</h5>
+              <ul>
+                <li>
+                  Reduced cancellations by 20%; retained 30% at-risk revenue.
+                </li>
+                <li>
+                  Realtime API + batch; SHAP explanations; CloudWatch monitors.
+                </li>
+              </ul>
+            </div>
+            <div class="section">
+              <h5>Stack</h5>
+              <div class="skillchips">
+                <span class="chip">AWS</span><span class="chip">SageMaker</span
+                ><span class="chip">Lambda</span
+                ><span class="chip">API GW</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Deployments: UMBC Exp Modal -->
+    <div
+      class="modal"
+      id="modal-umbc-exp"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="umbc-exp-title"
+    >
+      <div class="sheet">
+        <div class="cover">
+          <img
+            src="https://picsum.photos/seed/umbcwork/1600/600"
+            alt="UMBC work"
+          />
+          <div class="fade"></div>
+        </div>
+        <div class="body">
+          <div class="topline">
+            <h3 id="umbc-exp-title">UMBC — Data Science Intern</h3>
+            <button class="btn" data-close>Close</button>
+          </div>
+          <div class="two">
+            <div class="section">
+              <h5>Work</h5>
+              <ul>
+                <li>Cleaned & processed 5 years of outcome data.</li>
+                <li>
+                  Built Tableau dashboards; created student-friendly flyers.
+                </li>
+              </ul>
+            </div>
+            <div class="section">
+              <h5>Stack</h5>
+              <div class="skillchips">
+                <span class="chip">Tableau</span
+                ><span class="chip">Python</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kanhel Modal -->
+    <div
+      class="modal"
+      id="modal-kanhel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="kanhel-title"
+    >
+      <div class="sheet">
+        <div class="cover">
+          <img src="https://picsum.photos/seed/kanhel/1600/600" alt="Kanhel" />
+          <div class="fade"></div>
+        </div>
+        <div class="body">
+          <div class="topline">
+            <h3 id="kanhel-title">Kanhel Consulting — Data Scientist</h3>
+            <button class="btn" data-close>Close</button>
+          </div>
+          <div class="two">
+            <div class="section">
+              <h5>Highlights</h5>
+              <ul>
+                <li>RAG assistant: LangChain, Pinecone, Azure OpenAI.</li>
+                <li>
+                  XGBoost time-series for anomaly detection (+18% early ID).
+                </li>
+                <li>
+                  Azure SQL pipelines; analytics migration with drilldowns.
+                </li>
+              </ul>
+            </div>
+            <div class="section">
+              <h5>Stack</h5>
+              <div class="skillchips">
+                <span class="chip">Azure</span
+                ><span class="chip">LangChain</span
+                ><span class="chip">Pinecone</span
+                ><span class="chip">XGBoost</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cognizant Modal -->
+    <div
+      class="modal"
+      id="modal-cognizant"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cog-title"
+    >
+      <div class="sheet">
+        <div class="cover">
+          <img
+            src="https://picsum.photos/seed/cognizant/1600/600"
+            alt="Cognizant"
+          />
+          <div class="fade"></div>
+        </div>
+        <div class="body">
+          <div class="topline">
+            <h3 id="cog-title">Cognizant — Data Scientist</h3>
+            <button class="btn" data-close>Close</button>
+          </div>
+          <div class="two">
+            <div class="section">
+              <h5>Impact</h5>
+              <ul>
+                <li>NLP on support tickets → churn ↓15%.</li>
+                <li>Tableau for leadership → data-driven decisions ↑30%.</li>
+                <li>ETL pipelines → reporting TAT ↓40%.</li>
+              </ul>
+            </div>
+            <div class="section">
+              <h5>Team</h5>
+              <p>Mentored & onboarded 5 junior analysts.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Awards Modal -->
+    <div
+      class="modal"
+      id="modal-awards"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="aw-title"
+    >
+      <div class="sheet">
+        <div class="cover">
+          <img
+            src="https://picsum.photos/seed/awards/1600/600"
+            alt="Awards stage"
+          />
+          <div class="fade"></div>
+        </div>
+        <div class="body">
+          <div class="topline">
+            <h3 id="aw-title">Awards & Hackathons</h3>
+            <button class="btn" data-close>Close</button>
+          </div>
+          <div class="two">
+            <div class="section">
+              <h5>Highlights</h5>
+              <ul>
+                <li>
+                  <strong>Smart India Hackathon</strong>: 1st place among 20k+
+                  contestants; invoice reconciliation system.
+                </li>
+                <li>
+                  <strong>NASA Space Apps</strong>: Top honor; Unreal Engine
+                  game for Mars colonization future.
+                </li>
+                <li>
+                  <strong>Social Media Champ</strong>: Smart City Hackathon
+                  recognition.
+                </li>
+              </ul>
+            </div>
+            <div class="section">
+              <h5>Artifacts</h5>
+              <div class="btns">
+                <a class="btn" href="#">Project docs</a>
+                <a class="btn" href="#">Media</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Year
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Horizontal scrollers
+      function setupScroll(rowId, group) {
+        const left = document.querySelector(
+          `.scroll-btn[data-scroll="${group}"]:not([data-dir])`
+        );
+        const right = document.querySelector(
+          `.scroll-btn[data-scroll="${group}"][data-dir="right"]`
+        );
+        const el = document.getElementById(rowId);
+        if (!el || !left || !right) return;
+        const step = () => Math.min(600, el.clientWidth * 0.9);
+        left.addEventListener("click", () =>
+          el.scrollBy({ left: -step(), behavior: "smooth" })
+        );
+        right.addEventListener("click", () =>
+          el.scrollBy({ left: step(), behavior: "smooth" })
+        );
+      }
+      setupScroll("carousel-training", "training");
+      setupScroll("carousel-ft", "ft");
+      setupScroll("carousel-dep", "dep");
+
+      // Modals
+      const openModal = (id) => {
+        const m = document.getElementById(id);
+        if (!m) return;
+        m.classList.add("open");
+        const esc = (e) => {
+          if (e.key === "Escape") {
+            close();
+          }
+        };
+        const close = () => {
+          m.classList.remove("open");
+          document.removeEventListener("keydown", esc);
+        };
+        m.querySelector("[data-close]").addEventListener("click", close, {
+          once: true,
+        });
+        m.addEventListener("click", (e) => {
+          if (e.target === m) close();
+        });
+        document.addEventListener("keydown", esc);
+      };
+
+      document.querySelectorAll("[data-modal-target]").forEach((card) => {
+        card.addEventListener("click", () => {
+          const id = card.getAttribute("data-modal-target");
+          openModal(id);
+        });
+      });
+    </script>
+  </body>
+</html>
