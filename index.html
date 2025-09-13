@@ -416,7 +416,9 @@
         z-index: 60;
       }
       .modal.open {
-        display: grid;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
       }
       .modal .sheet {
         width: min(920px, 92vw);
@@ -478,6 +480,19 @@
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
+      }
+      #modal-youtube .sheet {
+        animation: popup-fade-in 0.25s cubic-bezier(.4,1.6,.6,1);
+      }
+      @keyframes popup-fade-in {
+        from {
+          transform: scale(0.92);
+          opacity: 0.5;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
       }
 
       @media (max-width: 900px) {
@@ -546,13 +561,14 @@
             & Azure—dashboards, pipelines, and models that move metrics.
           </p>
           <div class="hero-actions">
-            <a class="btn primary" href="https://medium.com/@rn.manogna" target="_blank"
-              ><i class="ri-play-fill"></i> Medium Blogs</a
+            <a class="btn primary" id="watch-story-btns" href="https://www.youtube.com/watch?v=C6dN0x5BR5M" target="_blank"
+              ><i class="ri-play-fill"></i> Watch My Story</a
             >
             <a class="btn" href="#deployments"
               ><i class="ri-rocket-2-line"></i> See deployments</a
             >
           </div>
+          
           <div class="badges">
             <span class="badge">LLMs • RAG • Prompt/Context Engineering</span>
             <span class="badge">AWS & Azure</span>
@@ -683,7 +699,7 @@
             </div>
           </article>
         </div>
-      </section>
+      </section> 
 
       <!-- Row: Fine-Tuning -->
       <section id="fine-tuning" aria-label="Fine-Tuning">
@@ -1669,6 +1685,27 @@
       </div>
     </div>
 
+    <!-- youtube modal-->
+       <div
+      class="modal"
+      id="modal-youtube"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="youtube-title"
+    >
+      <div class="sheet">
+        <div class="body">
+          <div class="topline">
+            <h3 id="youtube-title">Watch My Story</h3>
+            <button class="btn" data-close>Close</button>
+          </div>
+          <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;background:#000;border-radius:12px;">
+            <iframe id="youtube-iframe" src="" title="Watch My Story" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:12px;"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script>
       // Year
       document.getElementById("year").textContent = new Date().getFullYear();
@@ -1719,11 +1756,57 @@
       };
 
       document.querySelectorAll("[data-modal-target]").forEach((card) => {
-        card.addEventListener("click", () => {
-          const id = card.getAttribute("data-modal-target");
-          openModal(id);
-        });
+        // Special handling for YouTube modal button
+        if (card.id === "watch-story-btn") {
+          card.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const ytModal = document.getElementById("modal-youtube");
+            const ytIframe = document.getElementById("youtube-iframe");
+            const ytSrc = "https://www.youtube.com/embed/1H3UnvMskVSvSGY3OEaY7iXOMbYrlaxCY";
+            if (ytModal && ytIframe) {
+              ytIframe.src = ytSrc;
+              ytModal.classList.add("open");
+              // Modal close logic
+              const close = () => {
+                ytModal.classList.remove("open");
+                ytIframe.src = "";
+                document.removeEventListener("keydown", esc);
+              };
+              const esc = (e) => {
+                if (e.key === "Escape") close();
+              };
+              ytModal.querySelector("[data-close]").addEventListener("click", close, { once: true });
+              ytModal.addEventListener("click", function(ev) {
+                if (ev.target === ytModal) close();
+              }, { once: true });
+              document.addEventListener("keydown", esc);
+            }
+          });
+        } else {
+          card.addEventListener("click", () => {
+            const id = card.getAttribute("data-modal-target");
+            openModal(id);
+          });
+        }
       });
+const watchBtn = document.getElementById('watch-story-btn');
+const ytModal = document.getElementById('modal-youtube');
+const ytIframe = document.getElementById('youtube-iframe');
+if (watchBtn && ytModal && ytIframe) {
+  watchBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    ytIframe.src = 'https://www.youtube.com/embed/C6dN0x5BR5M?autoplay=1';
+  });
+  ytModal.addEventListener('click', function(e) {
+    if (e.target === ytModal) {
+      ytIframe.src = '';
+    }
+  });
+  ytModal.querySelector('[data-close]').addEventListener('click', function() {
+    ytIframe.src = '';
+  });
+}
     </script>
   </body>
 </html>
