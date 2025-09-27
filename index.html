@@ -41,6 +41,7 @@
         display: block;
         border-radius: 0;
       }
+
       @media (max-width: 900px) {
         .hero-flex {
           flex-direction: column-reverse;
@@ -52,25 +53,27 @@
           border-radius: 0;
         }
       }
+
       :root {
-        --bg: #0b0b0f; /* deep noir */
-        --bg-2: #121216; /* panels */
-        --text: #f3f4f6; /* body */
-        --muted: #a3a3a3; /* secondary */
-        --accent: #e50914; /* Netflix red (sparingly) */
-        --ai: #3ea6ff; /* electric blue for AI cues */
-        --card: #16161c; /* card bg */
-        --chip: #1f2430; /* chip bg */
+        --bg: #0b0b0f;
+        --bg-2: #121216;
+        --text: #f3f4f6;
+        --muted: #a3a3a3;
+        --accent: #e50914;
+        --ai: #3ea6ff;
+        --card: #16161c;
+        --chip: #1f2430;
         --ring: #2b2f3a;
       }
       * {
         box-sizing: border-box;
       }
+        
       html,
       body {
         height: 100%;
       }
-      body {
+        body {
         margin: 0;
         font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto,
           Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
@@ -111,11 +114,12 @@
         );
         border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       }
-      .nav {
+     .nav {
         display: flex;
         align-items: center;
         justify-content: space-between;
         height: 64px;
+        position: relative;
       }
       .brand {
         display: flex;
@@ -135,6 +139,7 @@
         font-family: Poppins, Inter, sans-serif;
         font-weight: 800;
       }
+        /* Desktop Navigation */
       nav ul {
         display: flex;
         gap: 18px;
@@ -145,6 +150,8 @@
       nav a {
         color: #e5e7eb;
         opacity: 0.9;
+        font-size: 0.95rem;
+
       }
       nav a:hover {
         opacity: 1;
@@ -154,21 +161,194 @@
         align-items: center;
         gap: 12px;
       }
-      .btn {
+        .btn {
         padding: 10px 14px;
         border-radius: 999px;
         border: 1px solid var(--ring);
         background: #15161b;
         color: #e5e7eb;
         font-weight: 600;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .btn:hover {
+        background: #1a1c23;
       }
       .btn.primary {
         background: var(--accent);
         border-color: #c80812;
       }
+       .btn.primary:hover {
+        background: #d40e1a;
+      }
       .btn.ghost {
         background: transparent;
       }
+
+       /* Hamburger Menu */
+      .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        width: 32px;
+        height: 32px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        z-index: 100;
+      }
+      .hamburger span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background: #e5e7eb;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+      }
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      /* Mobile Navigation CTA buttons */
+    nav#main-nav .cta {
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      margin-top: 16px;
+    }
+
+    nav#main-nav .btn {
+      width: 100%;
+      justify-content: center;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }   
+    
+    /* Social Links */
+      .social-links {
+        display: flex;
+        gap: 16px;
+        margin-top: 20px;
+        justify-content: flex-start;
+      }
+
+      .social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--ring);
+        border-radius: 12px;
+        color: #e5e7eb;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+
+      .social-links a:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Specific hover colors for each platform */
+      .social-links a[aria-label="GitHub"]:hover {
+        background: #333;
+        border-color: #333;
+      }
+
+      .social-links a[aria-label="LinkedIn"]:hover {
+        background: #0077b5;
+        border-color: #0077b5;
+      }
+
+      .social-links a[aria-label="Medium"]:hover {
+        background: #00ab6c;
+        border-color: #00ab6c;
+      }
+
+      .social-links a[aria-label="Calendly"]:hover {
+        background: #006bff;
+        border-color: #006bff;
+      }
+
+      .social-links a[aria-label="YouTube"]:hover {
+        background: #ff0000;
+        border-color: #ff0000;
+      }
+
+      /* Mobile responsive */
+      @media (max-width: 768px) {
+        .social-links {
+          justify-content: center;
+          margin-top: 16px;
+        }
+        
+        .social-links a {
+          width: 40px;
+          height: 40px;
+          font-size: 1.1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .social-links {
+          gap: 12px;
+        }
+        
+        .social-links a {
+          width: 36px;
+          height: 36px;
+          font-size: 1rem;
+        }
+      }
+
+
+      /* Mobile Navigation */
+      nav#main-nav {
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: rgba(21, 22, 27, 0.98);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--ring);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        display: none;
+        flex-direction: column;
+        padding: 16px 24px 20px; /* Added bottom padding */
+        z-index: 99;
+      }
+      nav#main-nav.open {
+        display: flex;
+      }
+      nav#main-nav ul {
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
+      nav#main-nav a {
+        font-size: 1rem;
+        padding: 8px 0;
+      }
+
 
       /* Hero */
       .hero {
@@ -234,6 +414,209 @@
         color: #cbd5e1;
       }
 
+      /* Modal styles (simplified for brevity) */
+      .modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        place-items: center;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        z-index: 60;
+      }
+      .modal.open {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+      }
+      .modal .sheet {
+        width: min(920px, 92vw);
+        background: linear-gradient(180deg, #14151b, #0f1117);
+        border: 1px solid #2a2f3b;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+      }
+
+      /* RESPONSIVE BREAKPOINTS */
+      
+      /* Tablet and small desktop */
+      @media (max-width: 1024px) {
+        .hero-flex {
+          gap: 24px;
+        }
+        .hero-img img {
+          width: 320px;
+          height: 320px;
+        }
+        .title {
+          font-size: 48px;
+        }
+      }
+
+      /* Large mobile and small tablet */
+      @media (max-width: 768px) {
+        .hamburger {
+          display: flex;
+        }
+        
+        /* Hide desktop nav */
+        .nav > nav {
+          display: none;
+        }
+        .nav > .cta {
+          display: none;
+        }
+        
+        /* Hero adjustments */
+        .hero-flex {
+          flex-direction: column-reverse;
+          gap: 20px;
+          text-align: center;
+        }
+        .hero-main {
+          flex: none;
+          width: 100%;
+        }
+        .hero-img {
+          flex: none;
+          width: 100%;
+        }
+        .hero-img img {
+          width: 250px;
+          height: 250px;
+        }
+        .title {
+          font-size: 36px;
+        }
+        .subtitle {
+          font-size: 1rem;
+        }
+        .hero-actions {
+          justify-content: center;
+          flex-direction: column;
+          gap: 10px;
+        }
+        .btn {
+          padding: 12px 20px;
+          font-size: 0.95rem;
+          justify-content: center;
+        }
+        .badges {
+          justify-content: center;
+          flex-direction: column;
+          gap: 8px;
+        }
+      }
+
+      /* Mobile phones */
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 16px;
+        }
+        
+        .nav {
+          height: 56px;
+          padding: 0 16px;
+        }
+        
+        .brand .logo {
+          width: 32px;
+          height: 32px;
+          font-size: 0.85rem;
+        }
+        
+        .hamburger {
+          width: 28px;
+          height: 28px;
+        }
+        
+        nav#main-nav {
+          padding: 12px 16px;
+          top: 56px;
+        }
+        
+        .hero {
+          padding: 32px 0 16px;
+        }
+        
+        .hero-img img {
+          width: 180px;
+          height: 180px;
+        }
+        
+        .overline {
+          font-size: 0.75rem;
+        }
+        
+        .title {
+          font-size: 28px;
+          margin: 8px 0;
+        }
+        
+        .subtitle {
+          font-size: 0.95rem;
+          line-height: 1.5;
+        }
+        
+        .btn {
+          padding: 10px 16px;
+          font-size: 0.9rem;
+        }
+        
+        .badge {
+          font-size: 0.8rem;
+          padding: 6px 10px;
+          text-align: center;
+        }
+        
+        .hero-actions {
+          margin-top: 16px;
+        }
+        
+        .badges {
+          margin-top: 12px;
+        }
+      }
+
+      /* Extra small phones */
+      @media (max-width: 360px) {
+        .container {
+          padding: 0 12px;
+        }
+        
+        .nav {
+          padding: 0 12px;
+        }
+        
+        nav#main-nav {
+          padding: 10px 12px;
+        }
+        
+        .hero-img img {
+          width: 140px;
+          height: 140px;
+        }
+        
+        .title {
+          font-size: 24px;
+        }
+        
+        .subtitle {
+          font-size: 0.9rem;
+        }
+        
+        .btn {
+          padding: 8px 12px;
+          font-size: 0.85rem;
+        }
+        
+        .badge {
+          font-size: 0.75rem;
+          padding: 5px 8px;
+        }
+      }
+
       /* Rows */
       section {
         margin: 42px 0;
@@ -257,7 +640,7 @@
         width: 36px;
         height: 36px;
         border-radius: 999px;
-        background: #15161b;
+        background: #a75555;
         border: 1px solid var(--ring);
         display: grid;
         place-items: center;
@@ -506,7 +889,7 @@
     </style>
   </head>
   <body>
-    <header>
+     <header>
       <div class="container nav">
         <div class="brand">
           <a
@@ -515,24 +898,50 @@
             class="logo"
             >MR</a
           >
-          <!-- <div>Manogna Rayasam</div> -->
         </div>
+        
+        <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        
+        <!-- Desktop Navigation -->
         <nav aria-label="Primary">
+          <ul>
+            <li><a href="#training-data" title="Education">My Training Data</a></li>
+            <li><a href="#fine-tuning" title="Projects">Fine-Tuning</a></li>
+            <li><a href="#inference-mode" title="Skills">Inference Mode</a></li>
+            <li><a href="#deployments" title="Work Experience">Deployments</a></li>
+          </ul>
+        </nav>
+        
+        <div class="cta">
+          <a class="btn ghost" href="https://calendly.com/rnagamanogna" target="_blank">
+            <i class="ri-send-plane-line"></i> Contact
+          </a>
+          <a class="btn primary" href="https://drive.google.com/file/d/1H3UnvMskVSvSGY3OEaY7iXOMbYrlaxCY/view?usp=sharing" target="_blank">
+            <i class="ri-download-2-line"></i> Resume
+          </a>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <nav id="main-nav" aria-label="Mobile menu">
           <ul>
             <li><a href="#training-data">My Training Data</a></li>
             <li><a href="#fine-tuning">Fine-Tuning</a></li>
             <li><a href="#inference-mode">Inference Mode</a></li>
             <li><a href="#deployments">Deployments</a></li>
           </ul>
+          <div class="cta">
+            <a class="btn ghost" href="https://calendly.com/rnagamanogna" target="_blank">
+              <i class="ri-send-plane-line"></i> Contact
+            </a>
+            <a class="btn primary" href="https://drive.google.com/file/d/1H3UnvMskVSvSGY3OEaY7iXOMbYrlaxCY/view?usp=sharing" target="_blank">
+              <i class="ri-download-2-line"></i> Resume
+            </a>
+          </div>
         </nav>
-        <div class="cta">
-          <a class="btn ghost" href="https://calendly.com/rnagamanogna" target="_blank"
-            ><i class="ri-send-plane-line"></i> Contact</a
-          >
-          <a class="btn primary" href="https://drive.google.com/file/d/1H3UnvMskVSvSGY3OEaY7iXOMbYrlaxCY/view?usp=sharing" target="_blank"
-            ><i class="ri-download-2-line"></i> Resume</a
-          >
-        </div>
       </div>
     </header>
 
@@ -542,31 +951,41 @@
       <div class="overlay" aria-hidden="true"></div>
       <div class="container hero-content hero-flex">
         <div class="hero-main">
-          <!-- <div class="overline">Data story • LLM-first portfolio</div> -->
           <div class="overline">
             Welcome to my little kingdom on the internet! 👋
           </div>
           <h1 class="title">
             I'm <span style="color: var(--ai)">Manogna Rayasam</span>
           </h1>
-          <!-- <h1 class="title">
-            Turning context into 4ght—<span style="color: var(--ai)"
-              >inference mode</span
-            >
-            on.
-          </h1> -->
           <p class="subtitle">
             Data Scientist with 4+ years across analytics, ML, and data
             engineering. I ship LLM/RAG products and measurable outcomes on AWS
             & Azure—dashboards, pipelines, and models that move metrics.
           </p>
           <div class="hero-actions">
-            <a class="btn primary" id="watch-story-btns" href="https://www.youtube.com/watch?v=C6dN0x5BR5M" target="_blank"
+           <a class="btn primary" id="watch-story-btns" href="https://www.youtube.com/watch?v=C6dN0x5BR5M" target="_blank"
               ><i class="ri-play-fill"></i> Watch My Story</a
             >
-            <a class="btn" href="#deployments"
-              ><i class="ri-rocket-2-line"></i> See deployments</a
-            >
+            <a class="btn" href="#deployments">
+              <i class="ri-rocket-2-line"></i> See deployments
+            </a>
+          </div>
+            <div class="social-links">
+            <a href="https://github.com/Manognarayasam" target="_blank" aria-label="GitHub" title="GitHub">
+              <i class="ri-github-fill"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/rn-manogna/" target="_blank" aria-label="LinkedIn" title="LinkedIn">
+              <i class="ri-linkedin-box-fill"></i>
+            </a>
+            <a href="https://medium.com/@rn.manogna" target="_blank" aria-label="Medium" title="Medium">
+              <i class="ri-medium-fill"></i>
+            </a>
+            <a href="https://calendly.com/rnagamanogna" target="_blank" aria-label="Calendly" title="Calendly">
+              <i class="ri-calendar-line"></i>
+            </a>
+            <a href="https://www.youtube.com/watch?v=C6dN0x5BR5M" target="_blank" aria-label="YouTube" title="YouTube">
+              <i class="ri-youtube-fill"></i>
+            </a>
           </div>
           
           <div class="badges">
@@ -575,17 +994,22 @@
             <span class="badge">Dashboards & MLOps</span>
           </div>
         </div>
+
         <div class="hero-img">
-          <img src="Manogna_bgless.png" alt="Manogna Rayasam" />
+          <img src="public/Manogna_bgless.png" alt="Manogna Rayasam" />
         </div>
       </div>
     </section>
 
+    <div>
+      <br>
+    </div>
     <main class="container">
       <!-- Row: My Training Data -->
       <section id="training-data" aria-label="My Training Data">
         <div class="row-header">
           <h2 class="row-title">My Training Data</h2>
+     
           <div class="scroller">
             <button class="scroll-btn" data-scroll="training">
               <i class="ri-arrow-left-s-line"></i>
@@ -594,6 +1018,12 @@
               <i class="ri-arrow-right-s-line"></i>
             </button>
           </div>
+        </div>
+        <div style="margin-bottom: 8px;"></div>
+          <p style="color: #c0c6d3">
+            The foundation of my expertise: a blend of formal education,
+            certifications, and hands-on research.
+          </p>
         </div>
         <div class="carousel" id="carousel-training">
           <!-- Education -->
@@ -713,6 +1143,12 @@
               <i class="ri-arrow-right-s-line"></i>
             </button>
           </div>
+          
+        </div>
+        <div style="margin-bottom: 8px;"></div>
+        <p style="color: #c0c6d3"></p>
+          Where models meet the real world: a curated set of projects where I fine-tuned, engineered, and deployed data and AI solutions. Each project is a hands-on experiment—LLMs, RAG, dashboards, and pipelines—built to solve actual problems and push the boundaries of what's possible with data.
+        </p>
         </div>
         <div class="carousel" id="carousel-ft">
           <!-- InsightAI -->
@@ -859,6 +1295,11 @@
         <div class="row-header">
           <h2 class="row-title">Inference Mode</h2>
         </div>
+        <div style="margin-bottom: 8px;"></div>
+            <p style="color: #c0c6d3"></p>
+                My toolbox for building, deploying, and scaling data/AI solutions: LLMs, RAG, cloud, dashboards, pipelines, and more. These are the frameworks, platforms, and tools I use to turn data into impact.
+            </p>
+        </div>
         <div class="skills-grid">
           <div class="skillcard">
             <h4>LLM & RAG</h4>
@@ -924,6 +1365,14 @@
               <i class="ri-arrow-right-s-line"></i>
             </button>
           </div>
+        </div>
+        <div style="margin-bottom: 8px;"></div>
+        <p style="color: #c0c6d3"></p>
+          Real-world impact through data science: a selection of my professional
+          experience where I've driven measurable outcomes—revenue growth,
+          efficiency gains, and user engagement—using data-driven strategies and
+          AI solutions.
+      </p>
         </div>
         <div class="carousel" id="carousel-dep">
           <!-- Experience cards -->
@@ -1061,8 +1510,9 @@
 
     <footer class="container">
       <div>
-        © <span id="year"></span> BManogna Rayasam • Built with HTML/CSS •
-        Netflix-style layout
+        © <span id="year"></span> Manogna Rayasam &mdash; All rights reserved.
+        <span style="color:#ff0000;font-weight:bold;">Data Science Portfolio</span>
+        | United states
       </div>
     </footer>
 
@@ -1707,6 +2157,56 @@
     </div>
 
     <script>
+
+         // Mobile menu functionality
+      const hamburger = document.querySelector('.hamburger');
+      const mobileNav = document.getElementById('main-nav');
+      
+      if (hamburger && mobileNav) {
+        hamburger.addEventListener('click', function() {
+          const isOpen = hamburger.getAttribute('aria-expanded') === 'true';
+          
+          // Toggle states
+          hamburger.setAttribute('aria-expanded', !isOpen);
+          hamburger.classList.toggle('active');
+          mobileNav.classList.toggle('open');
+        });
+
+        
+        // Close menu when clicking on links
+        mobileNav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', function() {
+            hamburger.setAttribute('aria-expanded', 'false');
+            hamburger.classList.remove('active');
+            mobileNav.classList.remove('open');
+          });
+        });
+
+        // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        });
+      });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+          if (!hamburger.contains(event.target) && !mobileNav.contains(event.target)) {
+            hamburger.setAttribute('aria-expanded', 'false');
+            hamburger.classList.remove('active');
+            mobileNav.classList.remove('open');
+          }
+        });
+      }
+
+
       // Year
       document.getElementById("year").textContent = new Date().getFullYear();
 
