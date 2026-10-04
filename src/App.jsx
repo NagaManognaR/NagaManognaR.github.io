@@ -4,6 +4,7 @@ import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import MagneticCursor from './components/MagneticCursor.jsx';
 import FallingLeaves from './components/FallingLeaves.jsx';
+import OccasionBanner from './components/OccasionBanner.jsx';
 import { seasonal } from './content/site.js';
 import Home from './pages/Home.jsx';
 import { AboutPage, ContactPage, JourneyPage, ResearchPage, WritingPage } from './pages/SectionPages.jsx';
@@ -80,6 +81,7 @@ export default function App() {
         {route(pathname)}
       </main>
       <Footer />
+      <OccasionBanner />
     </>
   );
 }

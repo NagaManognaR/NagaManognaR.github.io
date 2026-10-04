@@ -29,6 +29,12 @@ Each file starts with a comment listing its fields.
 ideas and essays, Substack for the weekly interview series, and Instagram for
 visual notes. Edit their text and links in `writing` in `site.js`.
 
+**Seasons and special days.** In `site.js`, `seasonal` switches the fall
+palette and the falling leaves on or off. `occasions` holds date-triggered
+greetings (Halloween on Oct 31 is set up). Each appears only on its day, in
+the visitor's own time zone. Preview one any day with `?occasion=<id>`, e.g.
+`http://localhost:5173/?occasion=halloween`.
+
 **Images.** Journey chapters accept `image: { src, alt }`. Put the
 files under `public/images/`.
 

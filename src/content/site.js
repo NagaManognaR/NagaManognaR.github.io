@@ -41,6 +41,20 @@ export const seasonal = {
   leaves: true, // falling leaves on every page
 };
 
+// Date-triggered greetings. Each shows only on its day, in the visitor's own
+// time zone (month is 1–12). Preview any of them on any day with
+// ?occasion=<id> in the address, e.g. http://localhost:5173/?occasion=halloween
+export const occasions = [
+  {
+    id: 'halloween',
+    month: 10,
+    day: 31,
+    emoji: '🎃',
+    title: 'Happy Halloween!',
+    text: 'Hope your day is more treat than trick.',
+  },
+];
+
 // Each entry is its own page.
 export const nav = [
   { label: 'Home', href: '/' },
