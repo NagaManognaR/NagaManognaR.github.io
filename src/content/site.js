@@ -59,9 +59,9 @@ export const occasions = [
 export const nav = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
+  { label: 'Journey', href: '/journey' },
   { label: 'Research', href: '/research' },
   { label: 'Writing', href: '/writing' },
-  { label: 'Journey', href: '/journey' },
   { label: 'Contact', href: '/contact' },
 ];
 

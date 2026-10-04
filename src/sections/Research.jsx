@@ -88,7 +88,7 @@ export default function Research() {
     <section id="research" className="section section--tint research" aria-labelledby="research-title">
       <div className="wrap">
         <SectionHeader
-          index="02"
+          index="03"
           label="Research"
           title="Studying how people *experience* AI."
           id="research-title"

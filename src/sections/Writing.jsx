@@ -10,7 +10,7 @@ export default function Writing() {
   return (
     <section id="writing" className="section writing" aria-labelledby="writing-title">
       <div className="wrap">
-        <SectionHeader index="03" label="Writing" title={writing.title} id="writing-title" />
+        <SectionHeader index="04" label="Writing" title={writing.title} id="writing-title" />
         <ul className="channels">
           {writing.channels.map((c, i) => {
             const Icon = icons[c.id];

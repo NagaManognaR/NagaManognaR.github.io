@@ -79,7 +79,7 @@ export default function Journey() {
         <div className="journey__intro">
           <div className="journey__sticky">
             <Reveal as="p" className="eyebrow">
-              <b>04</b>
+              <b>02</b>
               <span aria-hidden="true">—</span>
               Journey
             </Reveal>
