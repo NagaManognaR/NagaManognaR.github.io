@@ -68,7 +68,7 @@
 
 .cursor-dark .mc-ring.is-hovering {
   border-color: var(--accent, #d4473b);
-  background: rgb(212 71 59 / 0.1);
+  background: color-mix(in srgb, var(--accent, #d4473b) 10%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

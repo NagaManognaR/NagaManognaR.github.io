@@ -35,9 +35,10 @@ export const socials = [
   { id: 'substack', label: 'Substack', url: links.substack },
 ];
 
-// Seasonal touches. Set `leaves: false` when autumn is over.
+// Seasonal touches. When autumn is over: theme: null, leaves: false.
 export const seasonal = {
-  leaves: true,
+  theme: 'fall', // warmer palette (see :root[data-season='fall'] in src/index.css)
+  leaves: true, // falling leaves on every page
 };
 
 // Each entry is its own page.

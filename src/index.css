@@ -35,6 +35,27 @@
   color-scheme: light;
 }
 
+/* ── Fall theme ─────────────────────────────────────────────────────────
+   Warmer cream paper, rust/pumpkin accent, amber glow, warm brown ink.
+   On when `seasonal.theme` in src/content/site.js is 'fall'. */
+:root[data-season='fall'] {
+  --paper: #f7efe3;
+  --paper-2: #f0e3d0;
+  --paper-3: #e7d5bd;
+  --ink: #2b1d14;
+  --ink-2: #5a4636;
+  --ink-3: #8a7462;
+  --line: rgb(43 29 20 / 0.13);
+  --line-strong: rgb(43 29 20 / 0.26);
+  --accent: #b8521d;
+  --accent-ink: #9a3f12;
+  --accent-soft: #f1d6b8;
+  --glow:
+    radial-gradient(55% 75% at 78% 62%, rgb(232 158 92 / 0.55), transparent 70%),
+    radial-gradient(45% 55% at 8% 12%, rgb(246 214 160 / 0.75), transparent 70%),
+    linear-gradient(125deg, #faf3e8 0%, #f4e4cc 55%, #ecc9a5 100%);
+}
+
 *,
 *::before,
 *::after {
@@ -263,6 +284,14 @@ p {
     --glow:
       radial-gradient(80% 55% at 50% 38%, rgb(234 172 150 / 0.65), transparent 72%),
       linear-gradient(170deg, #f8f4ee 0%, #f3e3d8 60%, #f6efe8 100%);
+  }
+}
+
+@media (max-width: 960px) {
+  :root[data-season='fall'] {
+    --glow:
+      radial-gradient(80% 55% at 50% 38%, rgb(232 158 92 / 0.5), transparent 72%),
+      linear-gradient(170deg, #faf3e8 0%, #f4e2c9 60%, #f7efe3 100%);
   }
 }
 

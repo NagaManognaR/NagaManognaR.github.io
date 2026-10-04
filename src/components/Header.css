@@ -18,7 +18,7 @@
   height: var(--header-h);
   padding: 0 var(--pad);
   padding-top: env(safe-area-inset-top);
-  background: rgb(245 241 234 / 0.82);
+  background: color-mix(in srgb, var(--paper) 82%, transparent);
   border-bottom: 1px solid var(--line);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
   backdrop-filter: blur(16px) saturate(140%);
