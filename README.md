@@ -29,11 +29,18 @@ Each file starts with a comment listing its fields.
 ideas and essays, Substack for the weekly interview series, and Instagram for
 visual notes. Edit their text and links in `writing` in `site.js`.
 
-**Seasons and special days.** In `site.js`, `seasonal` switches the fall
-palette and the falling leaves on or off. `occasions` holds date-triggered
-greetings (Halloween on Oct 31 is set up). Each appears only on its day, in
-the visitor's own time zone. Preview one any day with `?occasion=<id>`, e.g.
-`http://localhost:5173/?occasion=halloween`.
+**Seasons and special days.** The site follows the calendar, in each
+visitor's own time zone. Everything is in `src/content/seasons.js`:
+- **Each month** has a season with its own colours (winter, spring, summer,
+  fall) and something falling from the sky (snow, cherry petals, Seattle
+  leaves, or nothing in summer). It also has a greeting, e.g. October is
+  "Halloween month", November "Thanksgiving month" and December "Christmas
+  month". Closing a monthly greeting hides it for the rest of that month.
+- **Special days** (New Year, Valentine's, July 4, Halloween, Thanksgiving,
+  Christmas, New Year's Eve) show their own greeting on that day.
+- **Preview** any time: `?month=12`, `?date=2026-11-26` or
+  `?occasion=halloween` after the address.
+- **Turn off** colours, particles or greetings with `seasonSettings`.
 
 **Images.** Journey chapters accept `image: { src, alt }`. Put the
 files under `public/images/`.

@@ -1,14 +1,15 @@
 import { useEffect, useRef } from 'react';
 
 /*
- * FallingLeaves
- * -------------
- * A light seasonal touch: Seattle-style fall leaves drifting down over the page.
+ * SeasonalParticles
+ * -----------------
+ * What falls from the sky this month: Seattle fall leaves, winter snow, or
+ * spring cherry petals (see `particles` in src/content/seasons.js).
  * One fixed canvas that never takes clicks, drawn with plain 2D paths.
  *   • Off for people who prefer reduced motion.
- *   • Fewer leaves on small screens.
+ *   • Fewer particles on small screens.
  *   • Sleeps while the tab is hidden.
- *   • Leaves drift gently away from the pointer as it passes.
+ *   • Particles drift gently away from the pointer as it passes.
  */
 
 const FRAME_MS = 1000 / 60;
@@ -163,16 +164,134 @@ function makeLeaf(w, h, anywhere) {
   };
 }
 
-export default function FallingLeaves({ count = 16, mobileCount = 8 }) {
+function drawLeaf(ctx, l) {
+  ctx.scale(l.size * Math.max(0.15, Math.abs(Math.cos(l.flip))), l.size);
+  ctx.fillStyle = l.color;
+  ctx.fill(l.kind.path);
+  // stem and veins, from where the stem joins out to each lobe tip
+  ctx.beginPath();
+  ctx.moveTo(0, l.kind.stemY + 0.22);
+  ctx.lineTo(0, l.kind.stemY * 0.4);
+  for (const [tx, ty] of l.kind.tips) {
+    ctx.moveTo(0, l.kind.stemY * 0.4);
+    ctx.lineTo(tx, ty);
+  }
+  ctx.lineWidth = 0.035;
+  ctx.strokeStyle = 'rgb(70 35 15 / 0.4)';
+  ctx.stroke();
+}
+
+// ── snow: soft dots, plus the odd six-armed crystal ─────────────────────────
+const SNOW_COLORS = ['#9fb4cc', '#b3c4d8', '#8aa3bf', '#c6d3e2'];
+
+function makeFlake(w, h, anywhere) {
+  const crystal = Math.random() < 0.15;
+  return {
+    crystal,
+    x: Math.random() * w,
+    y: anywhere ? Math.random() * h : -20 - Math.random() * h * 0.2,
+    size: crystal ? 7 + Math.random() * 6 : 1.6 + Math.random() * 3.2,
+    vy: 0.45 + Math.random() * 0.8,
+    drift: (Math.random() - 0.5) * 0.2,
+    sway: 0.3 + Math.random() * 0.6,
+    phase: Math.random() * Math.PI * 2,
+    freq: 0.01 + Math.random() * 0.015,
+    rot: Math.random() * Math.PI,
+    spin: (Math.random() - 0.5) * 0.02,
+    flip: 0,
+    flipSpeed: 0,
+    color: SNOW_COLORS[Math.floor(Math.random() * SNOW_COLORS.length)],
+    alpha: 0.55 + Math.random() * 0.35,
+    push: 0,
+  };
+}
+
+function drawFlake(ctx, f) {
+  ctx.fillStyle = f.color;
+  ctx.strokeStyle = f.color;
+  if (!f.crystal) {
+    ctx.beginPath();
+    ctx.arc(0, 0, f.size, 0, Math.PI * 2);
+    ctx.fill();
+    return;
+  }
+  ctx.lineWidth = Math.max(1, f.size * 0.12);
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  for (let i = 0; i < 6; i++) {
+    const a = (i * Math.PI) / 3;
+    const cx = Math.cos(a);
+    const sy = Math.sin(a);
+    ctx.moveTo(0, 0);
+    ctx.lineTo(cx * f.size, sy * f.size);
+    // two little side branches per arm
+    const bx = cx * f.size * 0.6;
+    const by = sy * f.size * 0.6;
+    const b = f.size * 0.28;
+    ctx.moveTo(bx, by);
+    ctx.lineTo(bx + Math.cos(a + 0.7) * b, by + Math.sin(a + 0.7) * b);
+    ctx.moveTo(bx, by);
+    ctx.lineTo(bx + Math.cos(a - 0.7) * b, by + Math.sin(a - 0.7) * b);
+  }
+  ctx.stroke();
+}
+
+// ── spring: cherry blossom petals, with the little notch at the tip ─────────
+const PETAL_COLORS = ['#f6c1cf', '#f3aec2', '#f9d3dd', '#eea0b7', '#f7b9c9'];
+const PETAL = (() => {
+  const p = new Path2D();
+  p.moveTo(0, 0.5);
+  p.bezierCurveTo(-0.42, 0.3, -0.4, -0.3, -0.14, -0.48);
+  p.lineTo(0, -0.36); // notch
+  p.lineTo(0.14, -0.48);
+  p.bezierCurveTo(0.4, -0.3, 0.42, 0.3, 0, 0.5);
+  p.closePath();
+  return p;
+})();
+
+function makePetal(w, h, anywhere) {
+  return {
+    x: Math.random() * w,
+    y: anywhere ? Math.random() * h : -20 - Math.random() * h * 0.3,
+    size: 9 + Math.random() * 8,
+    vy: 0.35 + Math.random() * 0.5,
+    drift: 0.15 + Math.random() * 0.35, // a light breeze
+    sway: 0.6 + Math.random() * 1.1,
+    phase: Math.random() * Math.PI * 2,
+    freq: 0.01 + Math.random() * 0.015,
+    rot: Math.random() * Math.PI * 2,
+    spin: (Math.random() - 0.5) * 0.04,
+    flip: Math.random() * Math.PI * 2,
+    flipSpeed: 0.03 + Math.random() * 0.04,
+    color: PETAL_COLORS[Math.floor(Math.random() * PETAL_COLORS.length)],
+    alpha: 0.7 + Math.random() * 0.25,
+    push: 0,
+  };
+}
+
+function drawPetal(ctx, p) {
+  ctx.scale(p.size * Math.max(0.2, Math.abs(Math.cos(p.flip))), p.size);
+  ctx.fillStyle = p.color;
+  ctx.fill(PETAL);
+}
+
+const KINDS = {
+  leaves: { count: 16, mobile: 8, make: makeLeaf, draw: drawLeaf },
+  snow: { count: 70, mobile: 35, make: makeFlake, draw: drawFlake },
+  petals: { count: 24, mobile: 12, make: makePetal, draw: drawPetal },
+};
+
+export default function SeasonalParticles({ kind = 'leaves' }) {
   const ref = useRef(null);
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const type = KINDS[kind];
+    if (!type || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     const canvas = ref.current;
     const ctx = canvas.getContext('2d');
     let w = 0;
     let h = 0;
-    let leaves = [];
+    let leaves = []; // the particles, whatever kind
     let raf = 0;
     let last = 0;
     const pointer = { x: -9999, y: -9999 };
@@ -184,8 +303,8 @@ export default function FallingLeaves({ count = 16, mobileCount = 8 }) {
       canvas.width = Math.round(w * dpr);
       canvas.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = w < 700 ? mobileCount : count;
-      while (leaves.length < n) leaves.push(makeLeaf(w, h, true));
+      const n = w < 700 ? type.mobile : type.count;
+      while (leaves.length < n) leaves.push(type.make(w, h, true));
       leaves.length = n;
     };
 
@@ -210,26 +329,13 @@ export default function FallingLeaves({ count = 16, mobileCount = 8 }) {
         l.x += (l.drift + Math.sin(l.phase) * l.sway + l.push) * k;
         l.y += l.vy * k;
 
-        if (l.y > h + 30 || l.x < -60 || l.x > w + 60) Object.assign(l, makeLeaf(w, h, false));
+        if (l.y > h + 30 || l.x < -60 || l.x > w + 60) Object.assign(l, type.make(w, h, false));
 
         ctx.save();
         ctx.translate(l.x, l.y);
         ctx.rotate(l.rot);
-        ctx.scale(l.size * Math.max(0.15, Math.abs(Math.cos(l.flip))), l.size);
         ctx.globalAlpha = l.alpha;
-        ctx.fillStyle = l.color;
-        ctx.fill(l.kind.path);
-        // stem and veins, from where the stem joins out to each lobe tip
-        ctx.beginPath();
-        ctx.moveTo(0, l.kind.stemY + 0.22);
-        ctx.lineTo(0, l.kind.stemY * 0.4);
-        for (const [tx, ty] of l.kind.tips) {
-          ctx.moveTo(0, l.kind.stemY * 0.4);
-          ctx.lineTo(tx, ty);
-        }
-        ctx.lineWidth = 0.035;
-        ctx.strokeStyle = 'rgb(70 35 15 / 0.4)';
-        ctx.stroke();
+        type.draw(ctx, l);
         ctx.restore();
       }
     };
@@ -267,7 +373,7 @@ export default function FallingLeaves({ count = 16, mobileCount = 8 }) {
       document.removeEventListener('mouseleave', onLeave);
       document.removeEventListener('visibilitychange', onVisibility);
     };
-  }, [count, mobileCount]);
+  }, [kind]);
 
   return <canvas ref={ref} className="falling-leaves" aria-hidden="true" />;
 }

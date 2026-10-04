@@ -35,9 +35,12 @@
   color-scheme: light;
 }
 
-/* ── Fall theme ─────────────────────────────────────────────────────────
-   Warmer cream paper, rust/pumpkin accent, amber glow, warm brown ink.
-   On when `seasonal.theme` in src/content/site.js is 'fall'. */
+/* ── Seasons ─────────────────────────────────────────────────────────────
+   The calendar picks one (src/content/seasons.js → <html data-season>).
+   Each is a very light paper, an accent, a glow, and --hero-filter, a gentle
+   colour grade that moves the video's grey-beige wall towards that paper. */
+
+/* Fall: apricot cream, rust/pumpkin accent, amber glow, warm brown ink */
 :root[data-season='fall'] {
   --paper: #fdf4e8;
   --paper-2: #f9ead7;
@@ -56,6 +59,66 @@
     linear-gradient(125deg, #fef8ef 0%, #fbead4 55%, #f6d6b4 100%);
   /* warms and lifts the video's grey-beige wall to match the page */
   --hero-filter: brightness(1.07) sepia(0.06) hue-rotate(-10deg) saturate(1.08);
+}
+
+/* Winter: icy white-blue paper, evergreen accent (cranberry in December) */
+:root[data-season='winter'] {
+  --paper: #f6f8fb;
+  --paper-2: #ebf0f6;
+  --paper-3: #dde6ef;
+  --ink: #1a2230;
+  --ink-2: #45505f;
+  --ink-3: #737e8c;
+  --line: rgb(26 34 48 / 0.12);
+  --line-strong: rgb(26 34 48 / 0.24);
+  --accent: #2f6b57;
+  --accent-ink: #24584a;
+  --accent-soft: #d6e6df;
+  --glow:
+    radial-gradient(55% 75% at 78% 62%, rgb(186 208 232 / 0.6), transparent 70%),
+    radial-gradient(45% 55% at 8% 12%, rgb(225 236 246 / 0.9), transparent 70%),
+    linear-gradient(125deg, #fafcfe 0%, #edf2f8 55%, #dce6f1 100%);
+  --hero-filter: brightness(1.1) saturate(0.75);
+}
+
+/* Spring: blush paper, cherry-blossom pink accent */
+:root[data-season='spring'] {
+  --paper: #fdf6f7;
+  --paper-2: #f9eaee;
+  --paper-3: #f2d9e0;
+  --ink: #24171c;
+  --ink-2: #57444b;
+  --ink-3: #8a757c;
+  --line: rgb(36 23 28 / 0.12);
+  --line-strong: rgb(36 23 28 / 0.24);
+  --accent: #c2456b;
+  --accent-ink: #a3345a;
+  --accent-soft: #f7d3de;
+  --glow:
+    radial-gradient(55% 75% at 78% 62%, rgb(244 188 204 / 0.55), transparent 70%),
+    radial-gradient(45% 55% at 8% 12%, rgb(251 226 233 / 0.85), transparent 70%),
+    linear-gradient(125deg, #fefafb 0%, #fbe9ee 55%, #f6d4de 100%);
+  --hero-filter: brightness(1.09) hue-rotate(-18deg) saturate(0.9);
+}
+
+/* Summer: warm light paper, Puget Sound blue accent */
+:root[data-season='summer'] {
+  --paper: #fffaf1;
+  --paper-2: #fbf0dd;
+  --paper-3: #f4e2c3;
+  --ink: #1d1a14;
+  --ink-2: #4d463b;
+  --ink-3: #7f7666;
+  --line: rgb(29 26 20 / 0.12);
+  --line-strong: rgb(29 26 20 / 0.24);
+  --accent: #1f6f8b;
+  --accent-ink: #185a72;
+  --accent-soft: #d3e8ef;
+  --glow:
+    radial-gradient(55% 75% at 78% 62%, rgb(255 212 150 / 0.5), transparent 70%),
+    radial-gradient(45% 55% at 8% 12%, rgb(205 230 242 / 0.7), transparent 70%),
+    linear-gradient(125deg, #fffdf7 0%, #fdf2de 55%, #f7e3c0 100%);
+  --hero-filter: brightness(1.1) saturate(0.9) sepia(0.02);
 }
 
 *,

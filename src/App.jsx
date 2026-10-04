@@ -3,9 +3,9 @@ import { useLinkInterception, useLocation } from './lib/router.jsx';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import MagneticCursor from './components/MagneticCursor.jsx';
-import FallingLeaves from './components/FallingLeaves.jsx';
+import SeasonalParticles from './components/SeasonalParticles.jsx';
 import OccasionBanner from './components/OccasionBanner.jsx';
-import { seasonal } from './content/site.js';
+import { useSeason } from './lib/occasion.js';
 import Home from './pages/Home.jsx';
 import { AboutPage, ContactPage, JourneyPage, ResearchPage, WritingPage } from './pages/SectionPages.jsx';
 import NotFound from './pages/NotFound.jsx';
@@ -67,6 +67,7 @@ export default function App() {
   const { pathname, hash } = useLocation();
   useScrollOnNavigate(pathname, hash);
   usePageViews(pathname);
+  const season = useSeason();
   useLinkInterception();
 
   return (
@@ -75,13 +76,18 @@ export default function App() {
         Skip to content
       </a>
       <MagneticCursor />
-      {seasonal.leaves && <FallingLeaves />}
+      {season.particles && <SeasonalParticles key={season.particles} kind={season.particles} />}
       <Header />
       <main id="main" key={pathname} className={`page${pathname === '/' ? ' page--home' : ''}`} tabIndex={-1}>
         {route(pathname)}
       </main>
       <Footer />
-      <OccasionBanner />
+      <OccasionBanner
+        key={season.greeting?.id}
+        greeting={season.greeting}
+        monthKey={season.key}
+        dayKey={season.dayKey}
+      />
     </>
   );
 }
