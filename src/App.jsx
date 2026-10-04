@@ -3,6 +3,8 @@ import { useLinkInterception, useLocation } from './lib/router.jsx';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import MagneticCursor from './components/MagneticCursor.jsx';
+import FallingLeaves from './components/FallingLeaves.jsx';
+import { seasonal } from './content/site.js';
 import Home from './pages/Home.jsx';
 import { AboutPage, ContactPage, JourneyPage, ResearchPage, WritingPage } from './pages/SectionPages.jsx';
 import NotFound from './pages/NotFound.jsx';
@@ -72,6 +74,7 @@ export default function App() {
         Skip to content
       </a>
       <MagneticCursor />
+      {seasonal.leaves && <FallingLeaves />}
       <Header />
       <main id="main" key={pathname} className={`page${pathname === '/' ? ' page--home' : ''}`} tabIndex={-1}>
         {route(pathname)}

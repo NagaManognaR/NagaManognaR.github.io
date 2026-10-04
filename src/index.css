@@ -100,6 +100,15 @@ p {
   white-space: nowrap;
 }
 
+.falling-leaves {
+  position: fixed;
+  z-index: 40; /* above the page, below the header (60) and the cursor */
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
 .skip-link {
   position: fixed;
   z-index: 100;
