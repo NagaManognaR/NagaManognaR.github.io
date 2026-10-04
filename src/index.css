@@ -39,9 +39,9 @@
    Warmer cream paper, rust/pumpkin accent, amber glow, warm brown ink.
    On when `seasonal.theme` in src/content/site.js is 'fall'. */
 :root[data-season='fall'] {
-  --paper: #f7efe3;
-  --paper-2: #f0e3d0;
-  --paper-3: #e7d5bd;
+  --paper: #fdf4e8;
+  --paper-2: #f9ead7;
+  --paper-3: #f2dcc1;
   --ink: #2b1d14;
   --ink-2: #5a4636;
   --ink-3: #8a7462;
@@ -53,7 +53,9 @@
   --glow:
     radial-gradient(55% 75% at 78% 62%, rgb(232 158 92 / 0.55), transparent 70%),
     radial-gradient(45% 55% at 8% 12%, rgb(246 214 160 / 0.75), transparent 70%),
-    linear-gradient(125deg, #faf3e8 0%, #f4e4cc 55%, #ecc9a5 100%);
+    linear-gradient(125deg, #fef8ef 0%, #fbead4 55%, #f6d6b4 100%);
+  /* warms and lifts the video's grey-beige wall to match the page */
+  --hero-filter: brightness(1.07) sepia(0.06) hue-rotate(-10deg) saturate(1.08);
 }
 
 *,

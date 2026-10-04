@@ -57,6 +57,13 @@
   opacity: 1;
 }
 
+/* optional colour grade from the page (e.g. a seasonal theme); the phone
+   text fade gets it too so the two stay the same colour */
+.ch-canvas,
+.ch-hero::after {
+  filter: var(--hero-filter, none);
+}
+
 /* ── floating glass nav pill ───────────────────────────────────────────── */
 .ch-header {
   position: fixed;
