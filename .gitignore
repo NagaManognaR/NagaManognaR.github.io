@@ -1,0 +1,10 @@
+node_modules
+dist
+scripts/frames_debug
+.venv
+
+# source videos for the hero frames: keep them private (back them up elsewhere)
+*.mp4
+
+# local Claude app settings
+.claude/

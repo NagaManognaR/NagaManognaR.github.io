@@ -1,0 +1,292 @@
+/*
+ * Design tokens and base styles.
+ * Warm paper and ink neutrals, and one accent: the red of the hero portrait.
+ */
+:root {
+  --paper: #f5f1ea;
+  --paper-2: #ece6dc;
+  --paper-3: #e2dacd;
+  --ink: #17130f;
+  --ink-2: #4a433b;
+  --ink-3: #7a7065;
+  --line: rgb(23 19 15 / 0.12);
+  --line-strong: rgb(23 19 15 / 0.24);
+  --accent: #d4473b;
+  --accent-ink: #ad3429; /* accent for small text on paper (AA contrast) */
+  --accent-soft: #efd3c7;
+
+  /* warm light gradient behind the hero portrait and on the contact page */
+  --glow:
+    radial-gradient(55% 75% at 78% 62%, rgb(234 172 150 / 0.7), transparent 70%),
+    radial-gradient(45% 55% at 8% 12%, rgb(247 226 208 / 0.9), transparent 70%),
+    linear-gradient(125deg, #f8f4ee 0%, #f4e6dc 55%, #efd3c5 100%);
+  --on-accent: #fff8f3;
+
+  --serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
+  --sans: 'Manrope Variable', 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --script: 'Dancing Script Variable', 'Dancing Script', cursive;
+
+  --pad: clamp(1.25rem, 4.2vw, 4rem);
+  --max: 1320px;
+  --header-h: 4.5rem;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.6rem 1rem;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform 0.2s var(--ease);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* ── layout ─────────────────────────────────────────────────────────────── */
+.wrap {
+  width: 100%;
+  max-width: calc(var(--max) + var(--pad) * 2);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+}
+
+.section {
+  position: relative;
+  padding: clamp(3.5rem, 7vw, 6rem) 0;
+}
+
+.section + .section {
+  border-top: 1px solid var(--line);
+}
+
+.section--tint {
+  background: var(--paper-2);
+}
+
+/* ── type ───────────────────────────────────────────────────────────────── */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.eyebrow b {
+  color: var(--accent-ink);
+  font-weight: 500;
+}
+
+.display {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.25rem, 4.8vw, 4.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.display em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.lede {
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  line-height: 1.65;
+  color: var(--ink-2);
+  text-wrap: pretty;
+}
+
+.mono {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+
+/* underline that draws in from the left */
+.link-line {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.45s var(--ease);
+}
+
+.link-line:hover,
+.link-line:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* ── reveal ─────────────────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.9s var(--ease),
+    transform 0.9s var(--ease);
+  transition-delay: var(--delay, 0s);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* word-by-word title reveal */
+.reveal-words .w {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.reveal-words .w > span {
+  display: inline-block;
+  transform: translateY(105%);
+  transition: transform 0.9s var(--ease);
+  transition-delay: calc(var(--delay, 0s) + var(--i) * 0.045s);
+}
+
+.reveal-words.is-in .w > span {
+  transform: none;
+}
+
+/* the footer stays at the bottom on short pages */
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#root > main {
+  flex: 1;
+}
+
+.page:not(.page--home) > .section:only-child {
+  min-height: 100%;
+}
+
+@media (max-width: 960px) {
+  :root {
+    --glow:
+      radial-gradient(80% 55% at 50% 38%, rgb(234 172 150 / 0.65), transparent 72%),
+      linear-gradient(170deg, #f8f4ee 0%, #f3e3d8 60%, #f6efe8 100%);
+  }
+}
+
+/* every page except home starts below the fixed header */
+.page:not(.page--home) {
+  padding-top: var(--header-h);
+}
+
+/* page transition */
+.page {
+  animation: page-in 0.7s var(--ease) both;
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal,
+  .reveal-words .w > span {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .page {
+    animation: none;
+  }
+}

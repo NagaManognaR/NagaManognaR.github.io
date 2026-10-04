@@ -1,0 +1,48 @@
+.about__wrap {
+  max-width: calc(44rem + var(--pad) * 2);
+}
+
+.about__story {
+  display: grid;
+  gap: 1.35rem;
+  font-size: clamp(1.08rem, 1.4vw, 1.22rem);
+  line-height: 1.75;
+  color: var(--ink-2);
+}
+
+.about__story strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* the "Microsoft" moment gets its own beat */
+.about__story p:nth-child(3) {
+  font-family: var(--serif);
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.about__story p:nth-child(3) strong {
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.about__ask {
+  margin-top: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+  background: var(--glow);
+  color: var(--ink);
+}
+
+.about__ask-link {
+  font-weight: 700;
+  color: var(--accent-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.about__ask-link:hover {
+  color: var(--ink);
+}

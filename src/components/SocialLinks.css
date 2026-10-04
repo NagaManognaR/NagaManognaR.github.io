@@ -1,0 +1,39 @@
+.social {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social a,
+.social-soon {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  color: inherit;
+  transition:
+    background-color 0.3s var(--ease),
+    color 0.3s var(--ease),
+    transform 0.3s var(--ease);
+}
+
+.social a:hover {
+  background: currentColor;
+}
+
+/* the icon inverts against the filled circle */
+.social a:hover svg {
+  color: var(--social-hover-ink, var(--paper));
+}
+
+.social a:hover {
+  transform: translateY(-2px);
+}
+
+.social-soon {
+  opacity: 0.32;
+}
